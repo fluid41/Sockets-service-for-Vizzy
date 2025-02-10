@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Craft name="SocketsTest" parent="" initialBoundsMin="-0.25,-0.1,-0.25" initialBoundsMax="0.25,0.1,0.25" removeInvalidParts="true" price="2690" xmlVersion="15" activeCommandPod="5" localCenterOfMass="0,0,0">
+  <Assembly>
+    <Parts>
+      <Part id="5" partType="CommandDisc1" position="0,0,0" rotation="0,0,0" name="Command Disc" rootPart="true" commandPodId="5" materials="2,2,2,2,2" texture="Fuselage10">
+        <Drag drag="0.08683854,0.08683854,0.2336578,0.2336578,0.0868341,0.08683409" area="0.09960938,0.09960938,0.2336578,0.2336578,0.09960938,0.09960938" />
+        <Config centerOfMass="-3.516031E-09,-9.1196E-10,4.299618E-09" />
+        <Fuselage bottomScale="0.25,0.25" deformations="0,0,0" depthCurve="0" offset="0,0.1,0" shellDensityOverride="-1" topScale="0.25,0.25" volume="0.0467264578" volumeInner="0.0426156968" inspectorEnabled="false" partPropertiesEnabled="false" version="3" />
+        <FuelTank capacity="64115.244921700563" fuel="64115.244921700563" utilization="0.55" inspectorEnabled="true" />
+        <Gyroscope maxAcceleration="1" utilization="0" partPropertiesEnabled="false" />
+        <CommandPod activationGroupNames=",,,,,,,Landing Gear,Solar Panels,RCS" activationGroupStates="false,false,false,false,false,false,false,true,false,true" configureBattery="1" pidPitch="10,0,25" pidRoll="10,0,25" pilotSeatRotation="270,0,0" stageCalculationVersion="2">
+          <Controls />
+        </CommandPod>
+        <FlightProgram maxInstructionsPerFrame="200" powerConsumptionPerInstruction="0.01" broadcastPowerConsumptionPerByte="0.1">
+          <Program name="Sockets test">
+            <Variables>
+              <Variable name="N" number="0" />
+              <Variable name="T" number="0" />
+              <Variable name="L1">
+                <Items />
+              </Variable>
+              <Variable name="Text" number="0" />
+            </Variables>
+            <Instructions>
+              <Event event="FlightStart" id="0" style="flight-start" pos="-10,-20" />
+              <WaitSeconds id="1" style="wait-seconds">
+                <Constant text="0" />
+              </WaitSeconds>
+              <StartSockets id="2" style="StartSockets">
+                <Constant text="10809" />
+                <Constant text="10809" />
+                <Constant text="10808" />
+              </StartSockets>
+              <SetVariable id="3" style="set-variable">
+                <Variable list="false" local="false" variableName="N" />
+                <Constant number="0" />
+              </SetVariable>
+            </Instructions>
+            <Instructions>
+              <Event event="ReceiveMessage" id="4" style="receive-msg" pos="545.6417,4.608986">
+                <Constant canReplace="false" text="10809" />
+              </Event>
+              <If id="5" style="if">
+                <Comparison op="=" style="op-eq">
+                  <Variable list="false" local="false" variableName="N" />
+                  <Constant number="0" />
+                </Comparison>
+                <Instructions>
+                  <SetVariable id="6" style="set-variable">
+                    <Variable list="false" local="false" variableName="T" />
+                    <CraftProperty property="Time.RealTime" style="prop-time" />
+                  </SetVariable>
+                </Instructions>
+              </If>
+              <SetVariable id="7" style="set-variable">
+                <Variable list="false" local="false" variableName="Text" />
+                <Constant text=" " />
+              </SetVariable>
+              <For var="i" id="8" style="for">
+                <Constant number="1" />
+                <ListOp op="length" style="list-length">
+                  <Variable list="false" local="true" variableName="data" />
+                </ListOp>
+                <Constant number="1" />
+                <Instructions>
+                  <SetVariable id="9" style="set-variable">
+                    <Variable list="false" local="false" variableName="Text" />
+                    <StringOp op="join" style="join">
+                      <Variable list="false" local="false" variableName="Text" />
+                      <StringOp op="join" style="join">
+                        <Variable list="false" local="true" variableName="i" />
+                        <Constant text=": " />
+                        <ListOp op="get" style="list-get">
+                          <Variable list="false" local="true" variableName="data" />
+                          <Variable list="false" local="true" variableName="i" />
+                        </ListOp>
+                        <Constant text=" " />
+                        <Constant text="" />
+                      </StringOp>
+                      <Constant text="" />
+                    </StringOp>
+                  </SetVariable>
+                </Instructions>
+              </For>
+              <DisplayMessage id="10" style="display">
+                <Variable list="false" local="false" variableName="Text" />
+                <Constant number="7" />
+              </DisplayMessage>
+              <SetList op="clear" id="11" style="list-clear">
+                <Variable list="true" local="false" variableName="L1" />
+              </SetList>
+              <SetList op="add" id="12" style="list-add">
+                <Variable list="true" local="false" variableName="L1" />
+                <ListOp op="get" style="list-get">
+                  <Variable list="false" local="true" variableName="data" />
+                  <Constant number="1" />
+                </ListOp>
+              </SetList>
+              <SetList op="add" id="13" style="list-add">
+                <Variable list="true" local="false" variableName="L1" />
+                <CraftProperty property="Vel.OrbitVelocity" style="prop-velocity" />
+              </SetList>
+              <SetList op="add" id="14" style="list-add">
+                <Variable list="true" local="false" variableName="L1" />
+                <Constant style="false" bool="false" />
+              </SetList>
+              <SetList op="add" id="15" style="list-add">
+                <Variable list="true" local="false" variableName="L1" />
+                <CraftProperty property="Altitude.AGL" style="prop-altitude" />
+              </SetList>
+              <SentSockets id="16" style="SentSockets">
+                <Variable list="true" local="false" variableName="L1" />
+                <Constant text="10809" />
+              </SentSockets>
+            </Instructions>
+            <Expressions />
+          </Program>
+        </FlightProgram>
+      </Part>
+    </Parts>
+    <Connections />
+    <Collisions />
+    <Bodies>
+      <Body id="1" partIds="5" mass="0.897848964" position="-3.516031E-09,-9.1196E-10,4.299618E-09" rotation="0,0,0" centerOfMass="0,0,0" />
+    </Bodies>
+  </Assembly>
+  <DesignerSettings themeName="Custom">
+    <Theme name="Custom" id="25a9195c-c404-4c77-9ea1-eef798ccc505">
+      <Material name="Base Color" color="FFFFFF" m="0.3" s="0" />
+      <Material name="Detail Color" color="178BFF" m="0" s="0.3" />
+      <Material name="Light Metal" color="CBCDCE" m="0.85" s="0.8" />
+      <Material name="Heavy Metal" color="76736F" m="0.85" s="0.5" />
+      <Material name="Ablative" color="000000" m="0.85" s="0" d="0.5" />
+      <Material name="Accent Color 1" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Accent Color 2" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Accent Color 3" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Accent Color 4" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Accent Color 5" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Gauge Color 1" color="000000" m="0.85" s="0" />
+      <Material name="Gauge Color 2" color="FF8000" m="0" s="0.5" e="1" />
+      <Material name="Gauge Color 3" color="FFFFFF" m="0" s="0" e="1" />
+      <Material name="Gauge Color 4" color="FF0000" m="0" s="0" e="1" />
+      <Material name="Gauge Color 5" color="68D100" m="0" s="0" e="1" />
+      <Material name="Fabric Base" color="FFFFFF" m="0" s="0" d="0.2" />
+      <Material name="Fabric Detail" color="178BFF" m="0" s="0" d="0.1" />
+      <Material name="Brushed Light Metal" color="CBCDCE" m="0.85" s="0.3" d="0.5" />
+      <Material name="Brushed Heavy Metal" color="76736F" m="0.85" s="0.3" d="0.5" />
+      <Material name="Sun Insulation" color="574204" m="0.95" s="0.95" d="0.2" />
+      <Material name="Solar Cells" color="000046" m="0.85" s="0.5" d="0.1" />
+      <Material name="Light" color="FFEEB9" m="0" s="1" />
+      <Material name="Display" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Glass Exterior" color="FFFFFF" m="1" s="1" t="0.8" />
+      <Material name="Glass Interior" color="808080" m="1" s="0" t="0.9" />
+    </Theme>
+  </DesignerSettings>
+  <Themes>
+    <Theme name="Custom" id="25a9195c-c404-4c77-9ea1-eef798ccc505">
+      <Material name="Base Color" color="FFFFFF" m="0.3" s="0" />
+      <Material name="Detail Color" color="178BFF" m="0" s="0.3" />
+      <Material name="Light Metal" color="CBCDCE" m="0.85" s="0.8" />
+      <Material name="Heavy Metal" color="76736F" m="0.85" s="0.5" />
+      <Material name="Ablative" color="000000" m="0.85" s="0" d="0.5" />
+      <Material name="Accent Color 1" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Accent Color 2" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Accent Color 3" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Accent Color 4" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Accent Color 5" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Gauge Color 1" color="000000" m="0.85" s="0" />
+      <Material name="Gauge Color 2" color="FF8000" m="0" s="0.5" e="1" />
+      <Material name="Gauge Color 3" color="FFFFFF" m="0" s="0" e="1" />
+      <Material name="Gauge Color 4" color="FF0000" m="0" s="0" e="1" />
+      <Material name="Gauge Color 5" color="68D100" m="0" s="0" e="1" />
+      <Material name="Fabric Base" color="FFFFFF" m="0" s="0" d="0.2" />
+      <Material name="Fabric Detail" color="178BFF" m="0" s="0" d="0.1" />
+      <Material name="Brushed Light Metal" color="CBCDCE" m="0.85" s="0.3" d="0.5" />
+      <Material name="Brushed Heavy Metal" color="76736F" m="0.85" s="0.3" d="0.5" />
+      <Material name="Sun Insulation" color="574204" m="0.95" s="0.95" d="0.2" />
+      <Material name="Solar Cells" color="000046" m="0.85" s="0.5" d="0.1" />
+      <Material name="Light" color="FFEEB9" m="0" s="1" />
+      <Material name="Display" color="FFFFFF" m="0.1" s="0.08" />
+      <Material name="Glass Exterior" color="FFFFFF" m="1" s="1" t="0.8" />
+      <Material name="Glass Interior" color="808080" m="1" s="0" t="0.9" />
+    </Theme>
+  </Themes>
+  <Symmetry />
+</Craft>
