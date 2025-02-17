@@ -1,0 +1,8 @@
+{
+	"name": "Sockets service for Vizzy",
+	"references": [
+		"UnityEngine.UI",
+		"Unity.TextMeshPro",
+		"Unity.Mathematics"
+	]
+}

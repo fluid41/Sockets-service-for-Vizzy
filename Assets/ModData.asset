@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1366777262, guid: c37b925f2b4978342b2e0b83a8fa404a, type: 3}
+  m_Name: ModData
+  m_EditorClassIdentifier: 
+  _assemblies:
+  - Sockets service for Vizzy.dll
+  _author: Fluid
+  _description: 'Added sockets server functionality for Vz
+
+    (Note: Only list
+    is supported for sending and receiving, and the separator is <<)
+
+
+    REQUIRED
+    DEPENDENCY:
+
+    Juno Harmony'
+  _loadPriority: 1000
+  _name: Sockets service for Vizzy
+  _otherAssets: []
+  _prefabs: []
+  _steamDescription: 
+  _steamLanguage: English
+  _steamPreviewPath: 
+  _steamTags: 
+  _steamTitle: 
+  _steamVisibility: 0
+  _versionMajor: 0
+  _versionMinor: 1
+  _partCategories: []
+  _parts: []
+  _partStyleExtensions: []
+  _partTextureStyles: []
+  _persistentObjects: []
+  _uiResourceDatabases: []
