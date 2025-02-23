@@ -18,5 +18,7 @@ MonoBehaviour:
   - Content/XML UI
   AutomaticallyRemoveEntries: 1
   entries:
+  - path: Sockets service for Vizzy/Sprite/Socket
+    resource: {fileID: 21300000, guid: 3ea206cc88352904a8c732b17e2c1e9e, type: 3}
   - path: Sockets service for Vizzy/UIResourceDatabase
     resource: {fileID: 11400000}

@@ -79,8 +79,8 @@ namespace Assets.Scripts
 
         private static readonly Dictionary<string, (Type, Func<ProgramNode>)> ModNodes = new()
         {
-            ["StartSockets"] = (typeof(StartSocketsExpression), () => new StartSocketsExpression()),
-            ["SentSockets"] = (typeof(SentSocketsExpression), () => new SentSocketsExpression()),
+            ["StartSockets"] = (typeof(StartSocketsInstruction), () => new StartSocketsInstruction()),
+            ["SentSockets"] = (typeof(SentSocketsInstruction), () => new SentSocketsInstruction()),
             ["StopSockets"] = (typeof(StopSocketsInstruction), () => new StopSocketsInstruction())
         };
 
@@ -177,7 +177,7 @@ namespace Assets.Scripts
                         new XAttribute("id", "SentSockets"),
                         new XAttribute("color", "Test1Color"),
                         new XAttribute("format", "send list (0) on port (1)"),
-                        new XAttribute("tooltip", "Must be list, otherwise a null value is sent")));
+                        new XAttribute("tooltip", "Must be list, otherwise a null value will be send")));
 
                     stylesElement.Add(new XElement(ns + "Style",
                         new XAttribute("id", "StopSockets"),
@@ -189,33 +189,53 @@ namespace Assets.Scripts
                 XElement categoriesElement = xml.Element(ns + "Categories");
                 if (categoriesElement != null)
                 {
-                    XElement eventsCategory = categoriesElement.Elements(ns + "Category")
-                        .FirstOrDefault(x => (string)x.Attribute("name") == "Events" && (string)x.Attribute("icon") == "Ui/Vizzy/ToolboxIconEvents");
-                    if (eventsCategory != null)
+                    XElement socketCategory = categoriesElement.Elements(ns + "Category")
+                        .FirstOrDefault(x => (string)x.Attribute("name") == "SocketCategory");
+                    if (socketCategory == null)
                     {
-                        // 创建StartSockets元素并添加子Constant
-                        XElement startSockets = new XElement(ns + "StartSockets",
-                            new XAttribute("style", "StartSockets"));
-                        startSockets.Add(new XElement(ns + "Constant",
-                            new XAttribute("text", "10809")));
-                        startSockets.Add(new XElement(ns + "Constant",
-                            new XAttribute("text", "2048")));
-                        eventsCategory.Add(startSockets);
-
-                        XElement SentSockets = new XElement(ns + "SentSockets",
-                            new XAttribute("style", "SentSockets"));
-                        SentSockets.Add(new XElement(ns + "Constant",
-                            new XAttribute("text", "data")));
-                        SentSockets.Add(new XElement(ns + "Constant",
-                            new XAttribute("text", "10809")));
-                        eventsCategory.Add(SentSockets);
-
-                        XElement StopSockets = new XElement(ns + "StopSockets",
-                            new XAttribute("style", "StopSockets"));
-                        StopSockets.Add(new XElement(ns + "Constant",
-                            new XAttribute("text", "10809")));
-                        eventsCategory.Add(StopSockets);
+                        socketCategory = new XElement(ns + "Category",
+                            new XAttribute("name", "Socket"),
+                            new XAttribute("icon", "Sockets service for Vizzy/Sprite/Socket"));
+                        categoriesElement.Add(socketCategory);
                     }
+
+                    XElement startSockets = new XElement(ns + "StartSockets",
+                        new XAttribute("style", "StartSockets"));
+                    startSockets.Add(new XElement(ns + "Constant",
+                        new XAttribute("text", "10809")));
+                    startSockets.Add(new XElement(ns + "Constant",
+                        new XAttribute("text", "2048")));
+                    socketCategory.Add(startSockets);
+
+                    XElement sentSockets = new XElement(ns + "SentSockets",
+                        new XAttribute("style", "SentSockets"));
+                    sentSockets.Add(new XElement(ns + "Constant",
+                        new XAttribute("text", "data")));
+                    sentSockets.Add(new XElement(ns + "Constant",
+                        new XAttribute("text", "10809")));
+                    socketCategory.Add(sentSockets);
+
+                    XElement stopSockets = new XElement(ns + "StopSockets",
+                        new XAttribute("style", "StopSockets"));
+                    stopSockets.Add(new XElement(ns + "Constant",
+                        new XAttribute("text", "10809")));
+                    socketCategory.Add(stopSockets);
+
+                    XElement receivesocketEvent = new XElement(ns + "Event",
+                        new XAttribute("style", "receive-msg"),
+                        new XAttribute("event", "ReceiveMessage"));
+                    receivesocketEvent.Add(new XElement(ns + "Constant",
+                        new XAttribute("text", "10809"),
+                        new XAttribute("canReplace", "false")));
+                    socketCategory.Add(receivesocketEvent);
+                    
+                    XElement socketErrorEvent = new XElement(ns + "Event",
+                        new XAttribute("style", "receive-msg"),
+                        new XAttribute("event", "ReceiveMessage"));
+                    socketErrorEvent.Add(new XElement(ns + "Constant",
+                        new XAttribute("text", "socket error"),
+                        new XAttribute("canReplace", "false")));
+                    socketCategory.Add(socketErrorEvent);
                 }
             }
         }

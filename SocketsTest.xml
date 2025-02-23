@@ -20,50 +20,60 @@
                 <Items />
               </Variable>
               <Variable name="Text" number="0" />
+              <Variable name="SocketErrorLog" number="0" />
             </Variables>
             <Instructions>
-              <Event event="FlightStart" id="0" style="flight-start" pos="-10,-20" />
+              <Event event="FlightStart" id="0" style="flight-start" pos="-140.1762,-61.21177" />
               <WaitSeconds id="1" style="wait-seconds">
                 <Constant text="0" />
               </WaitSeconds>
               <StartSockets id="2" style="StartSockets">
                 <Constant text="10809" />
-                <Constant text="10809" />
+                <Constant text="2048" />
                 <Constant text="10808" />
               </StartSockets>
               <SetVariable id="3" style="set-variable">
                 <Variable list="false" local="false" variableName="N" />
                 <Constant number="0" />
               </SetVariable>
+              <WaitUntil id="4" style="wait-until">
+                <Variable list="false" local="false" variableName="N" />
+              </WaitUntil>
+              <WaitSeconds id="5" style="wait-seconds">
+                <Constant text="5" />
+              </WaitSeconds>
+              <StopSockets id="6" style="StopSockets">
+                <Constant text="10809" />
+              </StopSockets>
             </Instructions>
             <Instructions>
-              <Event event="ReceiveMessage" id="4" style="receive-msg" pos="545.6417,4.608986">
+              <Event event="ReceiveMessage" id="7" style="receive-msg" pos="531.2509,334.0023">
                 <Constant canReplace="false" text="10809" />
               </Event>
-              <If id="5" style="if">
+              <If id="8" style="if">
                 <Comparison op="=" style="op-eq">
                   <Variable list="false" local="false" variableName="N" />
                   <Constant number="0" />
                 </Comparison>
                 <Instructions>
-                  <SetVariable id="6" style="set-variable">
+                  <SetVariable id="9" style="set-variable">
                     <Variable list="false" local="false" variableName="T" />
-                    <CraftProperty property="Time.RealTime" style="prop-time" />
+                    <CraftProperty property="Time.TimeSinceLaunch" style="prop-time" />
                   </SetVariable>
                 </Instructions>
               </If>
-              <SetVariable id="7" style="set-variable">
+              <SetVariable id="10" style="set-variable">
                 <Variable list="false" local="false" variableName="Text" />
                 <Constant text=" " />
               </SetVariable>
-              <For var="i" id="8" style="for">
+              <For var="i" id="11" style="for">
                 <Constant number="1" />
                 <ListOp op="length" style="list-length">
                   <Variable list="false" local="true" variableName="data" />
                 </ListOp>
                 <Constant number="1" />
                 <Instructions>
-                  <SetVariable id="9" style="set-variable">
+                  <SetVariable id="12" style="set-variable">
                     <Variable list="false" local="false" variableName="Text" />
                     <StringOp op="join" style="join">
                       <Variable list="false" local="false" variableName="Text" />
@@ -82,36 +92,298 @@
                   </SetVariable>
                 </Instructions>
               </For>
-              <DisplayMessage id="10" style="display">
+              <SetVariable id="13" style="set-variable">
+                <Variable list="false" local="false" variableName="Text" />
+                <StringOp op="join" style="join">
+                  <Variable list="false" local="false" variableName="Text" />
+                  <Constant text=" " />
+                  <BinaryOp op="/" style="op-div">
+                    <Variable list="false" local="false" variableName="N" />
+                    <BinaryOp op="-" style="op-sub">
+                      <CraftProperty property="Time.TimeSinceLaunch" style="prop-time" />
+                      <Variable list="false" local="false" variableName="T" />
+                    </BinaryOp>
+                  </BinaryOp>
+                  <Constant text="" />
+                </StringOp>
+              </SetVariable>
+              <DisplayMessage id="14" style="display">
                 <Variable list="false" local="false" variableName="Text" />
                 <Constant number="7" />
               </DisplayMessage>
-              <SetList op="clear" id="11" style="list-clear">
+              <SetList op="clear" id="15" style="list-clear">
                 <Variable list="true" local="false" variableName="L1" />
               </SetList>
-              <SetList op="add" id="12" style="list-add">
+              <SetList op="add" id="16" style="list-add">
                 <Variable list="true" local="false" variableName="L1" />
                 <ListOp op="get" style="list-get">
                   <Variable list="false" local="true" variableName="data" />
                   <Constant number="1" />
                 </ListOp>
               </SetList>
-              <SetList op="add" id="13" style="list-add">
+              <SetList op="add" id="17" style="list-add">
                 <Variable list="true" local="false" variableName="L1" />
                 <CraftProperty property="Vel.OrbitVelocity" style="prop-velocity" />
               </SetList>
-              <SetList op="add" id="14" style="list-add">
+              <SetList op="add" id="18" style="list-add">
                 <Variable list="true" local="false" variableName="L1" />
                 <Constant style="false" bool="false" />
               </SetList>
-              <SetList op="add" id="15" style="list-add">
+              <SetList op="add" id="19" style="list-add">
                 <Variable list="true" local="false" variableName="L1" />
                 <CraftProperty property="Altitude.AGL" style="prop-altitude" />
               </SetList>
-              <SentSockets id="16" style="SentSockets">
+              <ChangeVariable id="20" style="change-variable">
+                <Variable list="false" local="false" variableName="N" />
+                <Constant text="1" />
+              </ChangeVariable>
+              <SentSockets id="21" style="SentSockets">
                 <Variable list="true" local="false" variableName="L1" />
                 <Constant text="10809" />
               </SentSockets>
+            </Instructions>
+            <Instructions>
+              <Event event="ReceiveMessage" id="22" style="receive-msg" pos="1363.897,373.2934">
+                <Constant canReplace="false" text="socket error" />
+              </Event>
+              <SetVariable id="23" style="set-variable">
+                <Variable list="false" local="false" variableName="SocketErrorLog" />
+                <Constant text=" " />
+              </SetVariable>
+              <Comment id="24" style="comment">
+                <Constant style="comment-text" canReplace="false" text="StartSockets" />
+              </Comment>
+              <If id="25" style="if">
+                <StringOp op="contains" style="contains">
+                  <ListOp op="get" style="list-get">
+                    <Variable list="false" local="true" variableName="data" />
+                    <Constant text="1" />
+                  </ListOp>
+                  <Constant text="StartSockets : port error" />
+                </StringOp>
+                <Instructions>
+                  <SetVariable id="26" style="set-variable">
+                    <Variable list="false" local="false" variableName="SocketErrorLog" />
+                    <StringOp op="join" style="join">
+                      <Constant text="Invalid port number: " />
+                      <ListOp op="get" style="list-get">
+                        <Variable list="false" local="true" variableName="data" />
+                        <Constant text="2" />
+                      </ListOp>
+                      <Constant text="" />
+                    </StringOp>
+                  </SetVariable>
+                </Instructions>
+              </If>
+              <ElseIf id="27" style="else-if">
+                <StringOp op="contains" style="contains">
+                  <ListOp op="get" style="list-get">
+                    <Variable list="false" local="true" variableName="data" />
+                    <Constant text="1" />
+                  </ListOp>
+                  <Constant text="StartSockets : buffer error" />
+                </StringOp>
+                <Instructions>
+                  <SetVariable id="28" style="set-variable">
+                    <Variable list="false" local="false" variableName="SocketErrorLog" />
+                    <StringOp op="join" style="join">
+                      <Constant text="Invalid buffer number: " />
+                      <ListOp op="get" style="list-get">
+                        <Variable list="false" local="true" variableName="data" />
+                        <Constant text="3" />
+                      </ListOp>
+                      <Constant text="" />
+                    </StringOp>
+                  </SetVariable>
+                </Instructions>
+              </ElseIf>
+              <ElseIf id="29" style="else-if">
+                <StringOp op="contains" style="contains">
+                  <ListOp op="get" style="list-get">
+                    <Variable list="false" local="true" variableName="data" />
+                    <Constant text="1" />
+                  </ListOp>
+                  <Constant text="StartSockets : create error" />
+                </StringOp>
+                <Instructions>
+                  <SetVariable id="30" style="set-variable">
+                    <Variable list="false" local="false" variableName="SocketErrorLog" />
+                    <StringOp op="join" style="join">
+                      <Constant text="Failed to create server on port: " />
+                      <ListOp op="get" style="list-get">
+                        <Variable list="false" local="true" variableName="data" />
+                        <Constant text="2" />
+                      </ListOp>
+                      <Constant text="" />
+                    </StringOp>
+                  </SetVariable>
+                </Instructions>
+              </ElseIf>
+              <Comment id="31" style="comment">
+                <Constant style="comment-text" canReplace="false" text="SentSockets" />
+              </Comment>
+              <ElseIf id="32" style="else-if">
+                <StringOp op="contains" style="contains">
+                  <ListOp op="get" style="list-get">
+                    <Variable list="false" local="true" variableName="data" />
+                    <Constant text="1" />
+                  </ListOp>
+                  <Constant text="SentSockets : port error" />
+                </StringOp>
+                <Instructions>
+                  <SetVariable id="33" style="set-variable">
+                    <Variable list="false" local="false" variableName="SocketErrorLog" />
+                    <StringOp op="join" style="join">
+                      <Constant text="Invalid port number: " />
+                      <ListOp op="get" style="list-get">
+                        <Variable list="false" local="true" variableName="data" />
+                        <Constant text="2" />
+                      </ListOp>
+                      <Constant text="" />
+                    </StringOp>
+                  </SetVariable>
+                  <Comment id="34" style="comment">
+                    <Constant style="comment-text" canReplace="false" text="The send failure broadcast contains the message that was sent" />
+                  </Comment>
+                  <For var="i" id="35" style="for">
+                    <Constant text="3" />
+                    <ListOp op="length" style="list-length">
+                      <Variable list="false" local="true" variableName="data" />
+                    </ListOp>
+                    <Constant number="1" />
+                    <Instructions>
+                      <SetVariable id="36" style="set-variable">
+                        <Variable list="false" local="false" variableName="SocketErrorLog" />
+                        <StringOp op="join" style="join">
+                          <Variable list="false" local="false" variableName="SocketErrorLog" />
+                          <StringOp op="join" style="join">
+                            <BinaryOp op="-" style="op-sub">
+                              <Variable list="false" local="true" variableName="i" />
+                              <Constant text="2" />
+                            </BinaryOp>
+                            <Constant text=": " />
+                            <ListOp op="get" style="list-get">
+                              <Variable list="false" local="true" variableName="data" />
+                              <Variable list="false" local="true" variableName="i" />
+                            </ListOp>
+                            <Constant text=" " />
+                            <Constant text="" />
+                          </StringOp>
+                          <Constant text="" />
+                        </StringOp>
+                      </SetVariable>
+                    </Instructions>
+                  </For>
+                </Instructions>
+              </ElseIf>
+              <ElseIf id="37" style="else-if">
+                <StringOp op="contains" style="contains">
+                  <ListOp op="get" style="list-get">
+                    <Variable list="false" local="true" variableName="data" />
+                    <Constant text="1" />
+                  </ListOp>
+                  <Constant text="SentSockets : send error" />
+                </StringOp>
+                <Instructions>
+                  <SetVariable id="38" style="set-variable">
+                    <Variable list="false" local="false" variableName="SocketErrorLog" />
+                    <StringOp op="join" style="join">
+                      <Constant text="Failed to send data to port: " />
+                      <ListOp op="get" style="list-get">
+                        <Variable list="false" local="true" variableName="data" />
+                        <Constant text="2" />
+                      </ListOp>
+                      <Constant text="" />
+                    </StringOp>
+                  </SetVariable>
+                  <Comment id="39" style="comment">
+                    <Constant style="comment-text" canReplace="false" text="The send failure broadcast contains the message that was sent" />
+                  </Comment>
+                  <For var="i" id="40" style="for">
+                    <Constant text="3" />
+                    <ListOp op="length" style="list-length">
+                      <Variable list="false" local="true" variableName="data" />
+                    </ListOp>
+                    <Constant number="1" />
+                    <Instructions>
+                      <SetVariable id="41" style="set-variable">
+                        <Variable list="false" local="false" variableName="SocketErrorLog" />
+                        <StringOp op="join" style="join">
+                          <Variable list="false" local="false" variableName="SocketErrorLog" />
+                          <StringOp op="join" style="join">
+                            <BinaryOp op="-" style="op-sub">
+                              <Variable list="false" local="true" variableName="i" />
+                              <Constant text="2" />
+                            </BinaryOp>
+                            <Constant text=": " />
+                            <ListOp op="get" style="list-get">
+                              <Variable list="false" local="true" variableName="data" />
+                              <Variable list="false" local="true" variableName="i" />
+                            </ListOp>
+                            <Constant text=" " />
+                            <Constant text="" />
+                          </StringOp>
+                          <Constant text="" />
+                        </StringOp>
+                      </SetVariable>
+                    </Instructions>
+                  </For>
+                </Instructions>
+              </ElseIf>
+              <Comment id="42" style="comment">
+                <Constant style="comment-text" canReplace="false" text="StopSockets" />
+              </Comment>
+              <ElseIf id="43" style="else-if">
+                <StringOp op="contains" style="contains">
+                  <ListOp op="get" style="list-get">
+                    <Variable list="false" local="true" variableName="data" />
+                    <Constant text="1" />
+                  </ListOp>
+                  <Constant text="StopSockets : port error" />
+                </StringOp>
+                <Instructions>
+                  <SetVariable id="44" style="set-variable">
+                    <Variable list="false" local="false" variableName="SocketErrorLog" />
+                    <StringOp op="join" style="join">
+                      <Constant text="Invalid port number: " />
+                      <ListOp op="get" style="list-get">
+                        <Variable list="false" local="true" variableName="data" />
+                        <Constant text="2" />
+                      </ListOp>
+                      <Constant text="" />
+                    </StringOp>
+                  </SetVariable>
+                </Instructions>
+              </ElseIf>
+              <ElseIf id="45" style="else-if">
+                <StringOp op="contains" style="contains">
+                  <ListOp op="get" style="list-get">
+                    <Variable list="false" local="true" variableName="data" />
+                    <Constant text="1" />
+                  </ListOp>
+                  <Constant text="StopSockets : close error" />
+                </StringOp>
+                <Instructions>
+                  <SetVariable id="46" style="set-variable">
+                    <Variable list="false" local="false" variableName="SocketErrorLog" />
+                    <StringOp op="join" style="join">
+                      <Constant text="Failed to close server on port: " />
+                      <ListOp op="get" style="list-get">
+                        <Variable list="false" local="true" variableName="data" />
+                        <Constant text="2" />
+                      </ListOp>
+                      <Constant text="" />
+                    </StringOp>
+                  </SetVariable>
+                </Instructions>
+              </ElseIf>
+              <Comment id="47" style="comment">
+                <Constant style="comment-text" canReplace="false" text=" " />
+              </Comment>
+              <DisplayMessage id="48" style="display">
+                <Variable list="false" local="false" variableName="SocketErrorLog" />
+                <Constant number="7" />
+              </DisplayMessage>
             </Instructions>
             <Expressions />
           </Program>

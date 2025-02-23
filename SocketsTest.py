@@ -6,33 +6,11 @@ SERVER_IP = '127.0.0.1'
 SERVER_PORT = 10809
 
 def send_message_with_length(sock, message):
-    # Encode the message with UTF-8 and prepend its length
     message_bytes = message.encode('utf-8')
-    # length_prefix = struct.pack('<I', len(message_bytes))
-    # sock.sendall(length_prefix + message_bytes)
-
     message_bytes = message.encode('utf-8')
     sock.sendall(message_bytes)
 
 def receive_message_with_length(sock):
-    # # Receive the 4-byte length prefix
-    # length_prefix = sock.recv(4)
-    # if not length_prefix:
-    #     return None
-    # message_length = struct.unpack('<I', length_prefix)[0]
-    # # Loop to receive the full message content
-    # chunks = []
-    # bytes_recd = 0
-    # while bytes_recd < message_length:
-    #     chunk = sock.recv(min(message_length - bytes_recd, 2048))
-    #     if not chunk:
-    #         break
-    #     chunks.append(chunk)
-    #     bytes_recd += len(chunk)
-    # message_bytes = b''.join(chunks)
-    # return message_bytes.decode('utf-8')
-    
-    # 直接接收一个缓冲区的数据
     message_bytes = sock.recv(2048)
     if not message_bytes:
         return None
@@ -93,8 +71,6 @@ def demo_client():
             for index, item in enumerate(result_list):
                 print(f"Item {index + 1}: {item} ({type(item).__name__})")
             
-            # Wait for 1 second before next iteration
-            # time.sleep(1)
 
     except Exception as e:
         print(f"Error occurred: {e}")

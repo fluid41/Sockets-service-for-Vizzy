@@ -1,5 +1,6 @@
 using Assets.Scripts.Vizzy.SocketsService;
 using ModApi.Craft.Program;
+using ModApi.Craft.Program.Craft;
 using ModApi.Craft.Program.Instructions;
 using System;
 using System.Collections.Generic;
@@ -8,79 +9,102 @@ using UnityEngine;
 namespace Assets.Scripts.Vizzy.Sockets
 {
     [Serializable]
-    public class StartSocketsExpression : ProgramExpression
+    public class StartSocketsInstruction : ProgramInstruction
     {
 
-        public override ExpressionResult Evaluate(IThreadContext context)
+        public override ProgramInstruction Execute(IThreadContext context)
         {
             string portString = this.GetExpression(0).Evaluate(context).TextValue;
             string bufferString = this.GetExpression(1).Evaluate(context).TextValue;
-            ExpressionResult expressionResult = new ExpressionResult();
-            expressionResult.BoolValue = false;
+            string ErrorMessage = null;
             if (!int.TryParse(portString, out int port))
             {
-                Debug.LogError("Invalid port number: " + portString);
-                return expressionResult;
+                //Debug.LogError("Invalid port number: " + portString);
+                context.Log.LogError("Invalid port number: " + portString, null, null);
+                ErrorMessage = "StartSockets : port error";
             }
             if (!int.TryParse(bufferString, out int buffer))
             {
-                Debug.LogError("Invalid buffer number: " + portString);
-                return expressionResult;
+                //Debug.LogError("Invalid buffer number: " + bufferString);
+                context.Log.LogError("Invalid buffer number: " + bufferString, null, null);
+                ErrorMessage = "StartSockets : buffer error";
             }
-
-            SocketsServiceManager.CreateServer(context.Craft, port, buffer);
-            //context.Log.Log("textValue1", null, null);
-            expressionResult.BoolValue = true;
-            return expressionResult;
-        }
-
-
-        public override bool IsBoolean
-        {
-            get
+            if (ErrorMessage == null)
             {
-                return true;
+                if (!SocketsServiceManager.CreateServer(context.Craft, port, buffer))
+                {
+                    //Debug.LogError("Failed to create server on port: " + portString);
+                    context.Log.LogError("Failed to create server on port: " + portString, null, null);
+                    ErrorMessage = "StartSockets : create error";
+                }
             }
+
+            if (ErrorMessage != null)
+            {
+                List<ExpressionListItem> list = new List<ExpressionListItem>();
+
+                list.Add(ErrorMessage);
+                list.Add(portString);
+                list.Add(bufferString);
+
+                context.Craft.BroadcastMessage(BroadcastScope.Program, "socket error", new ExpressionResult(list));
+            }
+
+            return base.Execute(context);
         }
+
     }
 
 
 
 
     [Serializable]
-    public class SentSocketsExpression : ProgramExpression
+    public class SentSocketsInstruction : ProgramInstruction
     {
 
-        public override ExpressionResult Evaluate(IThreadContext context)
+        public override ProgramInstruction Execute(IThreadContext context)
         {
-            string portString = this.GetExpression(1).Evaluate(context).TextValue;
             IReadOnlyList<ExpressionListItem> data = base.GetExpression(0).Evaluate(context).ListValue;
-            ExpressionResult expressionResult = new ExpressionResult();
-            expressionResult.BoolValue = false;
+            string portString = this.GetExpression(1).Evaluate(context).TextValue;
+            string ErrorMessage = null;
+
             if (!int.TryParse(portString, out int port))
             {
-                Debug.LogError("Invalid port number: " + portString);
-                return expressionResult;
+                //Debug.LogError("Invalid port number: " + portString);
+                context.Log.LogError("Invalid port number: " + portString, null, null);
+                ErrorMessage = "SentSockets : port error";
             }
-            string data1 = "";
-            foreach (var item in data)
+            else
             {
-                data1 += item.StringValue + "<<";
+                string data1 = "";
+                foreach (var item in data)
+                {
+                    data1 += item.StringValue + "<<";
+                }
+                //Debug.Log(data1);
+                byte[] dataBytes = System.Text.Encoding.UTF8.GetBytes(data1);
+                if (!SocketsServiceManager.Send(port, dataBytes))
+                {
+                    //Debug.LogError("Failed to send data to port: " + portString);
+                    ErrorMessage = "SentSockets : send error";
+                    context.Log.LogError("Failed to send data to port: " + portString, null, null);
+                }
             }
-            //Debug.Log(data1);
-            byte[] dataBytes = System.Text.Encoding.UTF8.GetBytes(data1);
-            expressionResult.BoolValue = SocketsServiceManager.Send(port, dataBytes);
-            return expressionResult;
+
+            if (ErrorMessage != null)
+            {
+                List<ExpressionListItem> list = new List<ExpressionListItem>();
+                list.Add(ErrorMessage);
+                list.Add(portString);
+                foreach (var item in data)
+                {
+                    list.Add(item);
+                }
+                context.Craft.BroadcastMessage(BroadcastScope.Program, "socket error", new ExpressionResult(list));
+            }
+            return base.Execute(context);
         }
 
-
-        public override bool IsBoolean
-        {
-            get
-            {
-                return true;
-            }
-        }
     }
 
 
@@ -97,14 +121,28 @@ namespace Assets.Scripts.Vizzy.Sockets
         public override ProgramInstruction Execute(IThreadContext context)
         {
             string portString = this.GetExpression(0).Evaluate(context).TextValue;
+            string ErrorMessage = null;
             if (!int.TryParse(portString, out int port))
             {
-                Debug.LogError("Invalid port number: " + portString);
-                return new ProgramInstruction();
+                //Debug.LogError("Invalid port number: " + portString);
+                context.Log.LogError("Invalid port number: " + portString, null, null);
+                ErrorMessage = "StopSockets : port error";
+            }
+            if (!SocketsServiceManager.CloseServer(port))
+            {
+                //Debug.LogError("Failed to close server on port: " + portString);
+                context.Log.LogError("Failed to close server on port: " + portString, null, null);
+                ErrorMessage = "StopSockets : close error";
             }
 
-            SocketsServiceManager.CloseServer(port);
-
+            if (ErrorMessage != null)
+            {
+                List<ExpressionListItem> list = new List<ExpressionListItem>();
+                list.Add(ErrorMessage);
+                list.Add(portString);
+                context.Craft.BroadcastMessage(BroadcastScope.Program, "socket error", new ExpressionResult(list));
+                context.Log.LogError("Failed to close server on port: " + portString, null, null);
+            }
             return base.Execute(context);
         }
 

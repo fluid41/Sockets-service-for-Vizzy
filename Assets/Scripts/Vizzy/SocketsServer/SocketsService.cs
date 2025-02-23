@@ -295,6 +295,7 @@ namespace Assets.Scripts.Vizzy.SocketsService
                 foreach (string text in array)
                 {
                     list.Add(text);
+                    
                 }
                 Craft.BroadcastMessage(BroadcastScope.Program, port.ToString(), new ExpressionResult(list));
             }
