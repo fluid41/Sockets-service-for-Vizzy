@@ -4,13 +4,10 @@ using Assets.Scripts.Vizzy.SocketsService;
 using Assets.Scripts.Vizzy.UI;
 using HarmonyLib;
 using ModApi.Craft.Program;
-using ModApi.Flight;
-using ModApi.Ui.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -61,7 +58,7 @@ namespace Assets.Scripts
             harmony.PatchAll();
             RegisterCustomNodes();
         }
-        
+
         /// <summary>
         /// Prevents a default instance of the <see cref="Mod"/> class from being created.
         /// </summary>
@@ -80,19 +77,11 @@ namespace Assets.Scripts
             base.OnModInitialized();
         }
 
-
-
-
-
-
-
-
-
-
         private static readonly Dictionary<string, (Type, Func<ProgramNode>)> ModNodes = new()
         {
-            ["StartSockets"] = (typeof(StartSocketsInstruction), () => new StartSocketsInstruction()),
-            ["SentSockets"] = (typeof(SentSocketsInstruction), () => new SentSocketsInstruction())
+            ["StartSockets"] = (typeof(StartSocketsExpression), () => new StartSocketsExpression()),
+            ["SentSockets"] = (typeof(SentSocketsExpression), () => new SentSocketsExpression()),
+            ["StopSockets"] = (typeof(StopSocketsInstruction), () => new StopSocketsInstruction())
         };
 
         // 核心注册方法
@@ -140,9 +129,6 @@ namespace Assets.Scripts
             //userInterface.AddBuildUserInterfaceXmlAction(
             //    UserInterfaceIds.Vizzy,
             //    OnBuildVizzyUI);
-
-            var harmony = new Harmony("com.yourname.vizzypatch");
-            harmony.PatchAll();
         }
 
         // 在 ExitFlightScene 方法执行后运行的 Harmony 补丁
@@ -157,8 +143,6 @@ namespace Assets.Scripts
                 //Debug.Log("The ExitFlightScene method has been executed");
             }
         }
-
-
 
         [HarmonyPatch(typeof(VizzyToolbox))]
         [HarmonyPatch(MethodType.Constructor)]
@@ -186,14 +170,20 @@ namespace Assets.Scripts
                     stylesElement.Add(new XElement(ns + "Style",
                         new XAttribute("id", "StartSockets"),
                         new XAttribute("color", "Test1Color"),
-                        new XAttribute("format", "start sockets server on port (0)"),
-                        new XAttribute("tooltip", "127.0.0.1")));
+                        new XAttribute("format", "start sockets server on port (0) buffer length (1)"),
+                        new XAttribute("tooltip", "127.0.0.1,You can start the service again to refresh the buffer length without interrupting the connection")));
 
                     stylesElement.Add(new XElement(ns + "Style",
                         new XAttribute("id", "SentSockets"),
                         new XAttribute("color", "Test1Color"),
                         new XAttribute("format", "send list (0) on port (1)"),
                         new XAttribute("tooltip", "Must be list, otherwise a null value is sent")));
+
+                    stylesElement.Add(new XElement(ns + "Style",
+                        new XAttribute("id", "StopSockets"),
+                        new XAttribute("color", "Test1Color"),
+                        new XAttribute("format", "stop sockets server on port (0)"),
+                        new XAttribute("tooltip", "...")));
                 }
 
                 XElement categoriesElement = xml.Element(ns + "Categories");
@@ -206,11 +196,12 @@ namespace Assets.Scripts
                         // 创建StartSockets元素并添加子Constant
                         XElement startSockets = new XElement(ns + "StartSockets",
                             new XAttribute("style", "StartSockets"));
-                        //startSockets.Add(new XElement(ns + "Constant",
-                        //    new XAttribute("text", "172.0.0.1")));
                         startSockets.Add(new XElement(ns + "Constant",
                             new XAttribute("text", "10809")));
+                        startSockets.Add(new XElement(ns + "Constant",
+                            new XAttribute("text", "2048")));
                         eventsCategory.Add(startSockets);
+
                         XElement SentSockets = new XElement(ns + "SentSockets",
                             new XAttribute("style", "SentSockets"));
                         SentSockets.Add(new XElement(ns + "Constant",
@@ -218,6 +209,12 @@ namespace Assets.Scripts
                         SentSockets.Add(new XElement(ns + "Constant",
                             new XAttribute("text", "10809")));
                         eventsCategory.Add(SentSockets);
+
+                        XElement StopSockets = new XElement(ns + "StopSockets",
+                            new XAttribute("style", "StopSockets"));
+                        StopSockets.Add(new XElement(ns + "Constant",
+                            new XAttribute("text", "10809")));
+                        eventsCategory.Add(StopSockets);
                     }
                 }
             }

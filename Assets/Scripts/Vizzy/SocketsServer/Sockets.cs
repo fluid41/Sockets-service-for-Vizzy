@@ -8,41 +8,59 @@ using UnityEngine;
 namespace Assets.Scripts.Vizzy.Sockets
 {
     [Serializable]
-    public class StartSocketsInstruction : ProgramInstruction
+    public class StartSocketsExpression : ProgramExpression
     {
 
-        public override ProgramInstruction Execute(IThreadContext context)
+        public override ExpressionResult Evaluate(IThreadContext context)
         {
             string portString = this.GetExpression(0).Evaluate(context).TextValue;
-
-
+            string bufferString = this.GetExpression(1).Evaluate(context).TextValue;
+            ExpressionResult expressionResult = new ExpressionResult();
+            expressionResult.BoolValue = false;
             if (!int.TryParse(portString, out int port))
             {
                 Debug.LogError("Invalid port number: " + portString);
-                return new ProgramInstruction();
+                return expressionResult;
+            }
+            if (!int.TryParse(bufferString, out int buffer))
+            {
+                Debug.LogError("Invalid buffer number: " + portString);
+                return expressionResult;
             }
 
-            SocketsServiceManager.CreateServer(context.Craft, port);
+            SocketsServiceManager.CreateServer(context.Craft, port, buffer);
             //context.Log.Log("textValue1", null, null);
-            ExpressionResult expressionResult = new ExpressionResult();
-            return base.Execute(context);
+            expressionResult.BoolValue = true;
+            return expressionResult;
         }
 
+
+        public override bool IsBoolean
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 
+
+
+
     [Serializable]
-    public class SentSocketsInstruction : ProgramInstruction
+    public class SentSocketsExpression : ProgramExpression
     {
 
-        public override ProgramInstruction Execute(IThreadContext context)
+        public override ExpressionResult Evaluate(IThreadContext context)
         {
             string portString = this.GetExpression(1).Evaluate(context).TextValue;
             IReadOnlyList<ExpressionListItem> data = base.GetExpression(0).Evaluate(context).ListValue;
-
+            ExpressionResult expressionResult = new ExpressionResult();
+            expressionResult.BoolValue = false;
             if (!int.TryParse(portString, out int port))
             {
                 Debug.LogError("Invalid port number: " + portString);
-                return new ProgramInstruction();
+                return expressionResult;
             }
             string data1 = "";
             foreach (var item in data)
@@ -51,30 +69,64 @@ namespace Assets.Scripts.Vizzy.Sockets
             }
             //Debug.Log(data1);
             byte[] dataBytes = System.Text.Encoding.UTF8.GetBytes(data1);
-            SocketsServiceManager.Send(port, dataBytes);
+            expressionResult.BoolValue = SocketsServiceManager.Send(port, dataBytes);
+            return expressionResult;
+        }
+
+
+        public override bool IsBoolean
+        {
+            get
+            {
+                return true;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+    [Serializable]
+    public class StopSocketsInstruction : ProgramInstruction
+    {
+
+        public override ProgramInstruction Execute(IThreadContext context)
+        {
+            string portString = this.GetExpression(0).Evaluate(context).TextValue;
+            if (!int.TryParse(portString, out int port))
+            {
+                Debug.LogError("Invalid port number: " + portString);
+                return new ProgramInstruction();
+            }
+
+            SocketsServiceManager.CloseServer(port);
 
             return base.Execute(context);
         }
 
-        //[Serializable]
-        //public class RecvInstruction : ProgramInstruction
-        //{
-        //    public ProgramEventType EventType
-        //    {
-        //        get
-        //        {
-        //            return this._event;
-        //        }
-        //    }
-
-        //    public override ProgramInstruction Execute(IThreadContext context)
-        //    {
-        //        return base.Execute(context);
-        //    }
-
-        //    [ProgramNodeProperty]
-        //    private ProgramEventType _event = ProgramEventType.FlightStart;
-        //}
     }
-}
 
+    //[Serializable]
+    //public class RecvInstruction : ProgramInstruction
+    //{
+    //    public ProgramEventType EventType
+    //    {
+    //        get
+    //        {
+    //            return this._event;
+    //        }
+    //    }
+
+    //    public override ProgramInstruction Execute(IThreadContext context)
+    //    {
+    //        return base.Execute(context);
+    //    }
+
+    //    [ProgramNodeProperty]
+    //    private ProgramEventType _event = ProgramEventType.FlightStart;
+    //}
+}

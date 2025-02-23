@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -16,15 +17,10 @@ namespace Assets.Scripts.Vizzy.SocketsService
     public static class SocketsServiceManager
     {
 
-        public static void Broadcast(ICraftService Craft, int port, byte[] data)
-        {
-            Debug.Log($"Broadcasting message from port {port}");
-        }
-
-        public static bool CreateServer(ICraftService Craft, int port)
+        public static bool CreateServer(ICraftService Craft, int port, int buffer)
         {
             //Debug.Log($"Creating server on port {port}");
-            return ServerManager.StartServer(Craft, port);
+            return ServerManager.StartServer(Craft, port, buffer);
         }
 
         public static bool CloseServer(int port)
@@ -48,16 +44,23 @@ namespace Assets.Scripts.Vizzy.SocketsService
     public class SocketServer
     {
         public event Action<ICraftService, int, byte[]> OnMessageReceived;
+        //public bool Sending = false;
 
         private readonly int _port;
         private ICraftService _Craft;
         private TcpListener _listener;
+        private int _buffer;
         private readonly List<TcpClient> _clients = new List<TcpClient>();
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
         public void UpdateCraft(ICraftService newCraft)
         {
             _Craft = newCraft;
+        }
+
+        public void UpdateBuffer(int Buffer)
+        {
+            _buffer = Buffer;
         }
 
         public SocketServer(ICraftService Craft, int port)
@@ -80,40 +83,67 @@ namespace Assets.Scripts.Vizzy.SocketsService
             while (!_cts.IsCancellationRequested)
             {
                 var client = await _listener.AcceptTcpClientAsync();
-                client.NoDelay = true; // Disable Nagle algorithm to reduce latency
+                client.NoDelay = true;
                 _clients.Add(client);
                 Debug.Log($"Client connected on port {_port}");
                 Task.Run(() => HandleClientAsync(client));
             }
         }
 
+        //private async Task HandleClientAsync(TcpClient client)
+        //{
+        //    var stream = client.GetStream();
+        //    var lengthBuffer = new byte[4];
+        //    var buffer = new byte[1024];
+
+        //    try
+        //    {
+        //        while (!_cts.IsCancellationRequested)
+        //        {
+        //            // Read message length prefix
+        //            await ReadFullAsync(stream, lengthBuffer, 0, 4);
+        //            int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
+
+        //            // Reallocate buffer if necessary
+        //            if (messageLength > buffer.Length)
+        //            {
+        //                buffer = new byte[messageLength];
+        //            }
+
+        //            // Read message content
+        //            await ReadFullAsync(stream, buffer, 0, messageLength);
+        //            var data = new byte[messageLength];
+        //            Buffer.BlockCopy(buffer, 0, data, 0, messageLength);
+
+        //            // Trigger event, passing ICraftService, port, and data
+        //            OnMessageReceived?.Invoke(_Craft, _port, data);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.LogError($"Error handling client: {ex.Message}");
+        //        _clients.Remove(client);
+        //        client.Dispose();
+        //    }
+        //}
+
+
         private async Task HandleClientAsync(TcpClient client)
         {
             var stream = client.GetStream();
-            var lengthBuffer = new byte[4];
-            var buffer = new byte[1024];
+            var buffer = new byte[_buffer];
 
             try
             {
                 while (!_cts.IsCancellationRequested)
                 {
-                    // Read message length prefix
-                    await ReadFullAsync(stream, lengthBuffer, 0, 4);
-                    int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
-
-                    // Reallocate buffer if necessary
-                    if (messageLength > buffer.Length)
-                    {
-                        buffer = new byte[messageLength];
-                    }
-
-                    // Read message content
-                    await ReadFullAsync(stream, buffer, 0, messageLength);
-                    var data = new byte[messageLength];
-                    Buffer.BlockCopy(buffer, 0, data, 0, messageLength);
-
-                    // Trigger event, passing ICraftService, port, and data
+                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                    if (bytesRead == 0)
+                        break;
+                    var data = new byte[bytesRead];
+                    Buffer.BlockCopy(buffer, 0, data, 0, bytesRead);
                     OnMessageReceived?.Invoke(_Craft, _port, data);
+
                 }
             }
             catch (Exception ex)
@@ -126,6 +156,7 @@ namespace Assets.Scripts.Vizzy.SocketsService
 
         public async Task SendAsync(byte[] data)
         {
+            //Sending = true;
             var lengthPrefix = BitConverter.GetBytes(data.Length);
 
             foreach (var client in _clients.ToArray())
@@ -134,7 +165,7 @@ namespace Assets.Scripts.Vizzy.SocketsService
                 {
                     var stream = client.GetStream();
                     // Send length prefix first
-                    await stream.WriteAsync(lengthPrefix, 0, 4);
+                    //await stream.WriteAsync(lengthPrefix, 0, 4);
                     // Then send data content
                     await stream.WriteAsync(data, 0, data.Length);
                     //Debug.Log($"Message sent to client on port {_port}");
@@ -145,6 +176,7 @@ namespace Assets.Scripts.Vizzy.SocketsService
                     _clients.Remove(client);
                 }
             }
+            //Sending = false;
         }
 
         private static async Task ReadFullAsync(NetworkStream stream, byte[] buffer, int offset, int count)
@@ -180,18 +212,20 @@ namespace Assets.Scripts.Vizzy.SocketsService
         private static readonly ConcurrentDictionary<int, SocketServer> _servers =
             new ConcurrentDictionary<int, SocketServer>();
 
-        public static bool StartServer(ICraftService Craft, int port)
+        public static bool StartServer(ICraftService Craft, int port, int buffer)
         {
             if (_servers.ContainsKey(port))
             {
                 Debug.Log($"Server already exists on port {port}, updating its context");
                 var existingServer = _servers[port];
+                existingServer.UpdateBuffer(buffer);
                 existingServer.UpdateCraft(Craft);
                 return true;
             }
 
             var newServer = new SocketServer(Craft, port);
             newServer.OnMessageReceived += Receive;
+            newServer.UpdateBuffer(buffer);
             newServer.Start();
 
             bool result = _servers.TryAdd(port, newServer);
@@ -235,6 +269,17 @@ namespace Assets.Scripts.Vizzy.SocketsService
 
             _ = server.SendAsync(data);
             return true;
+
+            //if (server.Sending)
+            //{
+            //    return false;
+            //}
+            //else
+            //{
+            //    _ = server.SendAsync(data);
+            //    return true;
+            //}
+
         }
 
         private static void Receive(ICraftService Craft, int port, byte[] data)
@@ -246,10 +291,10 @@ namespace Assets.Scripts.Vizzy.SocketsService
             if (Craft.ExecutingPart.Activated == true || Craft.ExecutingPart.IsDestroyed == false)
             {
                 string[] array = System.Text.Encoding.UTF8.GetString(data).Split(new string[] { "<<" }, StringSplitOptions.None);
-                List<ExpressionListItem> list = new List<ExpressionListItem>();
+                var list = new List<ExpressionListItem>();
                 foreach (string text in array)
                 {
-                    list.Add(text.Trim());
+                    list.Add(text);
                 }
                 Craft.BroadcastMessage(BroadcastScope.Program, port.ToString(), new ExpressionResult(list));
             }
