@@ -1,9 +1,12 @@
 .vs
+.vsconfig
+.vscode
 Library
 Temp
 obj
 Logs
 ModAssetBundles
+UserSettings
 Assets/_ModAssets_/*
 Assets/_ModAssets_.meta
 *.sln
