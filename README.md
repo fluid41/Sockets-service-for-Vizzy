@@ -1,7 +1,7 @@
 # Sockets-service-for-Vizzy
 Added sockets server functionality for Vz
 
-(Note: Only list is supported for sending and receiving, and the separator is <<)
+(Note: only supports sending and receiving list,separator: <<)
 
 **Supported Features:**
 

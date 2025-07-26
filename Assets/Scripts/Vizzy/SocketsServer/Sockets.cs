@@ -31,7 +31,7 @@ namespace Assets.Scripts.Vizzy.Sockets
             }
             if (ErrorMessage == null)
             {
-                if (!SocketsServiceManager.CreateServer(context.Craft, port, buffer))
+                if (!SocketsServiceManager.CreateServer(context, port, buffer))
                 {
                     //Debug.LogError("Failed to create server on port: " + portString);
                     context.Log.LogError("Failed to create server on port: " + portString, null, null);
