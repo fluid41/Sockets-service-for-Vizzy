@@ -16,21 +16,21 @@ namespace Assets.Scripts
     //[HarmonyPatch(typeof(FirstPersonCameraController), "SetVantageScript")]
     //public class ModifyTargetPatch
     //{
-    //    // ºóÖÃ²¹¶¡£¬ÔÚ SetVantageScript ·½·¨Ö´ĞĞºóµ÷ÓÃ
+    //    // åç½®è¡¥ä¸ï¼Œåœ¨ SetVantageScript æ–¹æ³•æ‰§è¡Œåè°ƒç”¨
     //    static void Postfix(FirstPersonCameraController __instance, CameraVantageScript cameraVantage)
     //    {
-    //        // ½öÔÚÅäÖÃÖĞÒªÇó¹Û²ìÖ¸»Ó²ÕÊ±²ÅĞŞ¸Ä _target
+    //        // ä»…åœ¨é…ç½®ä¸­è¦æ±‚è§‚å¯ŸæŒ‡æŒ¥èˆ±æ—¶æ‰ä¿®æ”¹ _target
     //        if (cameraVantage != null && cameraVantage.LookAtCommandPod)
     //        {
-    //            // Ê¹ÓÃ Harmony Ìá¹©µÄ AccessTools »ñÈ¡Ë½ÓĞ×Ö¶Î _target µÄ FieldInfo
+    //            // ä½¿ç”¨ Harmony æä¾›çš„ AccessTools è·å–ç§æœ‰å­—æ®µ _target çš„ FieldInfo
     //            var targetField = AccessTools.Field(typeof(FirstPersonCameraController), "_target");
     //            if (targetField != null)
     //            {
-    //                // Ê¾Àı£ºÊ¹ÓÃ GameObject.Find ²éÕÒ³¡¾°ÖĞÃû³ÆÎª "NewTargetObject" µÄ¶ÔÏó£¬²¢»ñÈ¡Æä Transform
+    //                // ç¤ºä¾‹ï¼šä½¿ç”¨ GameObject.Find æŸ¥æ‰¾åœºæ™¯ä¸­åç§°ä¸º "NewTargetObject" çš„å¯¹è±¡ï¼Œå¹¶è·å–å…¶ Transform
     //                Transform newTarget = GameObject.Find("NewTargetObject")?.transform;
     //                if (newTarget != null)
     //                {
-    //                    // ĞŞ¸Ä _target ×Ö¶ÎµÄÖµ
+    //                    // ä¿®æ”¹ _target å­—æ®µçš„å€¼
     //                    targetField.SetValue(__instance, newTarget);
     //                    Debug.Log("Successfully changed _target to the Transform of NewTargetObject");
     //                }
@@ -84,10 +84,10 @@ namespace Assets.Scripts
             ["StopSockets"] = (typeof(StopSocketsInstruction), () => new StopSocketsInstruction())
         };
 
-        // ºËĞÄ×¢²á·½·¨
+        // æ ¸å¿ƒæ³¨å†Œæ–¹æ³•
         public static void RegisterCustomNodes()
         {
-            // »ñÈ¡ ProgramNodeCreator ÀàĞÍ£¬Ê¹ÓÃ AccessTools.Inner À´»ñÈ¡Ç¶Ì×ÀàĞÍ
+            // è·å– ProgramNodeCreator ç±»å‹ï¼Œä½¿ç”¨ AccessTools.Inner æ¥è·å–åµŒå¥—ç±»å‹
             var programNodeCreatorType = AccessTools.Inner(typeof(ProgramSerializer), "ProgramNodeCreator");
             if (programNodeCreatorType == null)
             {
@@ -102,7 +102,7 @@ namespace Assets.Scripts
                 return;
             }
 
-            // »ñÈ¡ĞòÁĞ»¯Æ÷ÄÚ²¿×Öµä
+            // è·å–åºåˆ—åŒ–å™¨å†…éƒ¨å­—å…¸
             var typeNameLookup = AccessTools.Field(typeof(ProgramSerializer), "_typeNameLookup")?.GetValue(null) as IDictionary;
             var xmlNameLookup = AccessTools.Field(typeof(ProgramSerializer), "_xmlNameLookup")?.GetValue(null) as IDictionary;
 
@@ -112,7 +112,7 @@ namespace Assets.Scripts
                 return;
             }
 
-            // ¶¯Ì¬×¢²áÃ¿¸ö½Úµã
+            // åŠ¨æ€æ³¨å†Œæ¯ä¸ªèŠ‚ç‚¹
             foreach (var (xmlName, (nodeType, constructor)) in ModNodes)
             {
                 var creator = creatorConstructor.Invoke(new object[] { xmlName, nodeType, constructor });
@@ -131,11 +131,11 @@ namespace Assets.Scripts
             //    OnBuildVizzyUI);
         }
 
-        // ÔÚ ExitFlightScene ·½·¨Ö´ĞĞºóÔËĞĞµÄ Harmony ²¹¶¡
+        // åœ¨ ExitFlightScene æ–¹æ³•æ‰§è¡Œåè¿è¡Œçš„ Harmony è¡¥ä¸
         [HarmonyPatch(typeof(FlightSceneScript), "ExitFlightScene")]
         public static class ExitFlightScenePatch
         {
-            // ºóÖÃ²¹¶¡£¬ÔÚ ExitFlightScene ·½·¨Ö´ĞĞºóµ÷ÓÃ
+            // åç½®è¡¥ä¸ï¼Œåœ¨ ExitFlightScene æ–¹æ³•æ‰§è¡Œåè°ƒç”¨
             static void Postfix()
             {
 
@@ -150,10 +150,10 @@ namespace Assets.Scripts
 
         public static class VizzyToolboxCtorPatch
         {
-            // Ç°×º·½·¨£¬ÔÚ¹¹Ôìº¯ÊıÖ´ĞĞÇ°µ÷ÓÃ
+            // å‰ç¼€æ–¹æ³•ï¼Œåœ¨æ„é€ å‡½æ•°æ‰§è¡Œå‰è°ƒç”¨
             static void Prefix(ref XElement xml, ref bool showMfdCategory)
             {
-                Debug.Log("VizzyToolbox rewite start");
+                Debug.Log("VizzyToolbox rewrite start");
                 //showMfdCategory = true;
 
                 XNamespace ns = xml.Name.Namespace;
@@ -177,7 +177,7 @@ namespace Assets.Scripts
                         new XAttribute("id", "SentSockets"),
                         new XAttribute("color", "Test1Color"),
                         new XAttribute("format", "send list (0) on port (1)"),
-                        new XAttribute("tooltip", "Must be list, otherwise a null value will be send")));
+                        new XAttribute("tooltip", "Must be list, otherwise a null value will be sent")));
 
                     stylesElement.Add(new XElement(ns + "Style",
                         new XAttribute("id", "StopSockets"),
