@@ -17,10 +17,10 @@ namespace Assets.Scripts.Vizzy.SocketsService
     public static class SocketsServiceManager
     {
 
-        public static bool CreateServer(IThreadContext context, int port, int buffer)
+        public static bool CreateServer(IThreadContext context, int port, int buffer, bool useVzVariableBuffer)
         {
             //Debug.Log($"Creating server on port {port}");
-            return ServerManager.StartServer(context, port, buffer);
+            return ServerManager.StartServer(context, port, buffer, useVzVariableBuffer);
         }
 
         public static bool CloseServer(int port)
@@ -38,20 +38,83 @@ namespace Assets.Scripts.Vizzy.SocketsService
             //Debug.Log($"Sending data to client on port {port}");
             return ServerManager.SendData(port, data);
         }
+
+        public static ExpressionResult GetNextVzVariableBufferItem(int port)
+        {
+            var server = ServerManager.GetServer(port);
+            return server?.GetNextVzVariableBufferItem();
+        }
+
+        public static int GetVzVariableBufferCount(int port)
+        {
+            var server = ServerManager.GetServer(port);
+            return server?.GetVzVariableBufferCount() ?? 0;
+        }
+
+        public static void ClearVzVariableBuffer(int port)
+        {
+            var server = ServerManager.GetServer(port);
+            server?.ClearVzVariableBuffer();
+        }
+        public static void Receive(IThreadContext context, int port, byte[] data, bool useVzVariableBuffer)
+        {
+            //context.Craft.BroadcastMessage(BroadcastScope.Program, context.Craft.Name, data);
+            //Debug.Log($"Message received from port {port}");
+            //Debug.Log($"Message content: {System.Text.Encoding.UTF8.GetString(data)}");
+
+            if (context.Craft.ExecutingPart.Activated == true || context.Craft.ExecutingPart.IsDestroyed == false)
+            {
+                string[] array = Encoding.UTF8.GetString(data).Split(new string[] { "<<" }, StringSplitOptions.None);
+                var list = new List<ExpressionListItem>();
+                foreach (string text in array)
+                {
+                    list.Add(text);
+                }
+
+                var expressionResult = new ExpressionResult(list);
+
+                // 如果启用了VzVariableBuffer，将结果添加到对应端口的缓冲区
+                if (useVzVariableBuffer)
+                {
+                    var server = ServerManager.GetServer(port);
+                    if (server != null)
+                    {
+                        server.AddToVzVariableBuffer(expressionResult);
+                    }
+                }
+                else
+                {
+                    context.Craft.BroadcastMessage(BroadcastScope.Program, port.ToString(), expressionResult);
+                }
+
+                // SendData(port, data);
+                //context.GetOrCreateGlobalVariable("Socket_Received_Data").Value.Set(new ExpressionResult(list));
+
+
+            }
+            else
+            {
+                Debug.Log("Part is not active or destroyed");
+                CloseServer(port);
+            }
+
+        }
+
     }
 
 
     public class SocketServer
     {
-        public event Action<IThreadContext, int, byte[]> OnMessageReceived;
-        //public bool Sending = false;
-
+        public event Action<IThreadContext, int, bool, byte[]> OnMessageReceived;
         private readonly int _port;
         private IThreadContext _Context;
         private TcpListener _listener;
         private int _buffer;
+        private bool _useVzVariableBuffer;
         private readonly List<TcpClient> _clients = new List<TcpClient>();
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+        private readonly Queue<ExpressionResult> VzVariableBuffer = new Queue<ExpressionResult>();
+        private readonly object _bufferLock = new object();
 
         public void UpdateCraft(IThreadContext newContext)
         {
@@ -63,10 +126,60 @@ namespace Assets.Scripts.Vizzy.SocketsService
             _buffer = Buffer;
         }
 
-        public SocketServer(IThreadContext context, int port)
+        public void UpdateUseVzVariableBuffer(bool useVzVariableBuffer)
+        {
+            _useVzVariableBuffer = useVzVariableBuffer;
+        }
+
+        public void AddToVzVariableBuffer(ExpressionResult expressionResult)
+        {
+            lock (_bufferLock)
+            {
+                // 如果队列已满（20个元素），抛弃新的入队数据
+                if (VzVariableBuffer.Count >= 20)
+                {
+                    Debug.Log($"VzVariableBuffer is full (20 items) on port {_port}, discarding new data");
+                    return; // 满队列时抛弃入队的数据
+                }
+                
+                VzVariableBuffer.Enqueue(expressionResult);
+                Debug.Log($"Added item to VzVariableBuffer on port {_port}, current count: {VzVariableBuffer.Count}");
+            }
+        }
+
+        public ExpressionResult GetNextVzVariableBufferItem()
+        {
+            lock (_bufferLock)
+            {
+                if (VzVariableBuffer.Count > 0)
+                {
+                    return VzVariableBuffer.Dequeue(); // 先入先出：读取即为取出
+                }
+                return null;
+            }
+        }
+
+        public int GetVzVariableBufferCount()
+        {
+            lock (_bufferLock)
+            {
+                return VzVariableBuffer.Count;
+            }
+        }
+
+        public void ClearVzVariableBuffer()
+        {
+            lock (_bufferLock)
+            {
+                VzVariableBuffer.Clear();
+            }
+        }
+
+        public SocketServer(IThreadContext context, int port, bool useVzVariableBuffer)
         {
             _Context = context;
             _port = port;
+            _useVzVariableBuffer = useVzVariableBuffer;
             //Debug.Log($"SocketServer created on port {_port}");
         }
 
@@ -143,7 +256,7 @@ namespace Assets.Scripts.Vizzy.SocketsService
                         break;
                     var data = new byte[bytesRead];
                     Buffer.BlockCopy(buffer, 0, data, 0, bytesRead);
-                    OnMessageReceived?.Invoke(_Context, _port, data);
+                    OnMessageReceived?.Invoke(_Context, _port, _useVzVariableBuffer, data);
 
                 }
             }
@@ -213,10 +326,16 @@ namespace Assets.Scripts.Vizzy.SocketsService
 
     public static class ServerManager
     {
-        private static readonly ConcurrentDictionary<int, SocketServer> _servers =
+        internal static readonly ConcurrentDictionary<int, SocketServer> _servers =
             new ConcurrentDictionary<int, SocketServer>();
 
-        public static bool StartServer(IThreadContext context, int port, int buffer)
+        internal static SocketServer GetServer(int port)
+        {
+            _servers.TryGetValue(port, out var server);
+            return server;
+        }
+
+        public static bool StartServer(IThreadContext context, int port, int buffer, bool useVzVariableBuffer)
         {
             if (_servers.ContainsKey(port))
             {
@@ -224,10 +343,11 @@ namespace Assets.Scripts.Vizzy.SocketsService
                 var existingServer = _servers[port];
                 existingServer.UpdateBuffer(buffer);
                 existingServer.UpdateCraft(context);
+                existingServer.UpdateUseVzVariableBuffer(useVzVariableBuffer);
                 return true;
             }
 
-            var newServer = new SocketServer(context, port);
+            var newServer = new SocketServer(context, port, useVzVariableBuffer);
             newServer.OnMessageReceived += Receive;
             newServer.UpdateBuffer(buffer);
             newServer.Start();
@@ -286,31 +406,10 @@ namespace Assets.Scripts.Vizzy.SocketsService
 
         }
 
-        private static void Receive(IThreadContext context, int port, byte[] data)
+        private static void Receive(IThreadContext context, int port, bool useVzVariableBuffer, byte[] data)
         {
-            //context.Craft.BroadcastMessage(BroadcastScope.Program, context.Craft.Name, data);
-            //Debug.Log($"Message received from port {port}");
-            //Debug.Log($"Message content: {System.Text.Encoding.UTF8.GetString(data)}");
 
-            if (context.Craft.ExecutingPart.Activated == true || context.Craft.ExecutingPart.IsDestroyed == false)
-            {
-                string[] array = System.Text.Encoding.UTF8.GetString(data).Split(new string[] { "<<" }, StringSplitOptions.None);
-                var list = new List<ExpressionListItem>();
-                foreach (string text in array)
-                {
-                    list.Add(text);
-
-                }
-
-                // SendData(port, data);
-
-                context.Craft.BroadcastMessage(BroadcastScope.Program, port.ToString(), new ExpressionResult(list));
-            }
-            else
-            {
-                Debug.Log("Part is not active or destroyed");
-                SocketsServiceManager.CloseServer(port);
-            }
+            SocketsServiceManager.Receive(context, port, data, useVzVariableBuffer);
 
         }
     }

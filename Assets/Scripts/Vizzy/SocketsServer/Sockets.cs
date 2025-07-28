@@ -16,6 +16,7 @@ namespace Assets.Scripts.Vizzy.Sockets
         {
             string portString = this.GetExpression(0).Evaluate(context).TextValue;
             string bufferString = this.GetExpression(1).Evaluate(context).TextValue;
+            bool useVzVariableBuffer = this.GetExpression(2).Evaluate(context).BoolValue;
             string ErrorMessage = null;
             if (!int.TryParse(portString, out int port))
             {
@@ -31,7 +32,7 @@ namespace Assets.Scripts.Vizzy.Sockets
             }
             if (ErrorMessage == null)
             {
-                if (!SocketsServiceManager.CreateServer(context, port, buffer))
+                if (!SocketsServiceManager.CreateServer(context, port, buffer, useVzVariableBuffer))
                 {
                     //Debug.LogError("Failed to create server on port: " + portString);
                     context.Log.LogError("Failed to create server on port: " + portString, null, null);
@@ -143,6 +144,75 @@ namespace Assets.Scripts.Vizzy.Sockets
                 context.Craft.BroadcastMessage(BroadcastScope.Program, "socket error", new ExpressionResult(list));
                 context.Log.LogError("Failed to close server on port: " + portString, null, null);
             }
+            return base.Execute(context);
+        }
+
+    }
+
+
+
+
+    [Serializable]
+    public class UpdateVzVarBufferInstruction : ProgramInstruction
+    {
+        public override ProgramInstruction Execute(IThreadContext context)
+        {
+            string portString = this.GetExpression(0).Evaluate(context).TextValue;
+            string ErrorMessage = null;
+            // context.GetOrCreateGlobalVariable("portString").Value.Set(this.GetExpression(0).Evaluate(context));
+
+            if (!int.TryParse(portString, out int port))
+            {
+                context.Log.LogError("Invalid port number: " + portString, null, null);
+                ErrorMessage = "UpdateVzVarBuffer : port error";
+            }
+            else
+            {
+                // 从队列中取出一个数据项（先入先出，读取即为取出）
+                ExpressionResult nextItem = SocketsServiceManager.GetNextVzVariableBufferItem(port);
+
+                string variableName = $"Port{port}SocketReceivedData";
+
+                if (nextItem != null)
+                {
+                    // 如果队列中有数据，设置该数据到以端口命名的变量
+                    context.GetOrCreateGlobalVariable(variableName).Value.Set(nextItem);
+                }
+                else
+                {
+                    // 如果队列中没有数据，设置为空列表
+                    var emptyList = new List<ExpressionListItem>();
+                    context.GetOrCreateGlobalVariable(variableName).Value.Set(new ExpressionResult(emptyList));
+                }
+            }
+
+            if (ErrorMessage != null)
+            {
+                List<ExpressionListItem> list = new List<ExpressionListItem>();
+                list.Add(ErrorMessage);
+                list.Add(portString);
+                context.Craft.BroadcastMessage(BroadcastScope.Program, "socket error", new ExpressionResult(list));
+            }
+
+            return base.Execute(context);
+        }
+
+    }
+
+    [Serializable]
+    public class PreciseWaitInstruction : ProgramInstruction
+    {
+        public override ProgramInstruction Execute(IThreadContext context)
+        {
+            double waitTime = this.GetExpression(0).Evaluate(context).NumberValue;
+            
+            // 实现精确等待功能
+            if (waitTime > 0)
+            {
+                // 将等待时间转换为毫秒并执行等待
+                System.Threading.Thread.Sleep((int)(waitTime * 1000));
+            }
+            
             return base.Execute(context);
         }
 
