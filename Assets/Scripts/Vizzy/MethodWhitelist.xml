@@ -1,0 +1,1054 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MethodWhitelist GeneratedTime="2025-07-30 10:52:03" Version="1.0">
+  <Namespace name="ModApi.Craft.Program">
+    <Class name="IThreadContext">
+      <Method name="BreakExecution" enabled="false" returnType="void" accessPath="context.BreakExecution" category="Other" description="void BreakExecution(BreakExecutionType breakExecutionType)">
+        <Parameters>
+          <Parameter name="breakExecutionType" type="BreakExecutionType" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="CreateLocalVariable" enabled="false" returnType="Variable" accessPath="context.CreateLocalVariable" category="Create" description="Variable CreateLocalVariable(string name)">
+        <Parameters>
+          <Parameter name="name" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetCustomExpression" enabled="false" returnType="CustomExpression" accessPath="context.GetCustomExpression" category="Read" description="CustomExpression GetCustomExpression(string name)">
+        <Parameters>
+          <Parameter name="name" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetCustomInstruction" enabled="false" returnType="CustomInstruction" accessPath="context.GetCustomInstruction" category="Read" description="CustomInstruction GetCustomInstruction(string name)">
+        <Parameters>
+          <Parameter name="name" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetInstructionState" enabled="false" returnType="double" accessPath="context.GetInstructionState" category="Read" description="double GetInstructionState(ProgramInstruction instruction)">
+        <Parameters>
+          <Parameter name="instruction" type="ProgramInstruction" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetLocalVariable" enabled="false" returnType="Variable" accessPath="context.GetLocalVariable" category="Read" description="Variable GetLocalVariable(string name)">
+        <Parameters>
+          <Parameter name="name" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetOrCreateGlobalVariable" enabled="false" returnType="Variable" accessPath="context.GetOrCreateGlobalVariable" category="Read" description="Variable GetOrCreateGlobalVariable(string name)">
+        <Parameters>
+          <Parameter name="name" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="HasInstructionState" enabled="false" returnType="bool" accessPath="context.HasInstructionState" category="Read" description="bool HasInstructionState(ProgramInstruction instruction)">
+        <Parameters>
+          <Parameter name="instruction" type="ProgramInstruction" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="PopStackFrame" enabled="false" returnType="StackFrame" accessPath="context.PopStackFrame" category="Other" description="StackFrame PopStackFrame()" />
+      <Method name="PushStackFrame" enabled="false" returnType="void" accessPath="context.PushStackFrame" category="Other" description="void PushStackFrame(ProgramInstruction returnInstruction)">
+        <Parameters>
+          <Parameter name="returnInstruction" type="ProgramInstruction" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="SetInstructionState" enabled="false" returnType="void" accessPath="context.SetInstructionState" category="Write" description="void SetInstructionState(ProgramInstruction instruction, double state)">
+        <Parameters>
+          <Parameter name="instruction" type="ProgramInstruction" isOptional="false" />
+          <Parameter name="state" type="double" isOptional="false" />
+        </Parameters>
+      </Method>
+    </Class>
+    <Class name="ICraftService" accessPath="context.Craft">
+      <Method name="ActivateNextStage" enabled="false" returnType="void" accessPath="context.Craft.ActivateNextStage" category="Other" description="void ActivateNextStage()" />
+      <Method name="BroadcastMessage" enabled="false" returnType="void" accessPath="context.Craft.BroadcastMessage" category="Other" description="void BroadcastMessage(BroadcastScope scope, string messageName, ExpressionResult data)">
+        <Parameters>
+          <Parameter name="scope" type="BroadcastScope" isOptional="false" />
+          <Parameter name="messageName" type="string" isOptional="false" />
+          <Parameter name="data" type="ExpressionResult" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="ConvertLatLongAglToPlanetPosition" enabled="false" returnType="Vector3d" accessPath="context.Craft.ConvertLatLongAglToPlanetPosition" category="Other" description="Vector3d ConvertLatLongAglToPlanetPosition(Vector3d latLongAgl)">
+        <Parameters>
+          <Parameter name="latLongAgl" type="Vector3d" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="ConvertLatLongAslToPlanetPosition" enabled="false" returnType="Vector3d" accessPath="context.Craft.ConvertLatLongAslToPlanetPosition" category="Other" description="Vector3d ConvertLatLongAslToPlanetPosition(Vector3d latLongAsl)">
+        <Parameters>
+          <Parameter name="latLongAsl" type="Vector3d" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="ConvertLocalToPCI" enabled="false" returnType="Vector3d" accessPath="context.Craft.ConvertLocalToPCI" category="Other" description="Vector3d ConvertLocalToPCI(IPartScript part, Vector3 local)">
+        <Parameters>
+          <Parameter name="part" type="IPartScript" isOptional="false" />
+          <Parameter name="local" type="Vector3" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="ConvertPCIToLocal" enabled="false" returnType="Vector3" accessPath="context.Craft.ConvertPCIToLocal" category="Other" description="Vector3 ConvertPCIToLocal(IPartScript part, Vector3d pci)">
+        <Parameters>
+          <Parameter name="part" type="IPartScript" isOptional="false" />
+          <Parameter name="pci" type="Vector3d" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="ConvertPlanetPositionToLatLongAgl" enabled="false" returnType="Vector3d" accessPath="context.Craft.ConvertPlanetPositionToLatLongAgl" category="Other" description="Vector3d ConvertPlanetPositionToLatLongAgl(Vector3d position)">
+        <Parameters>
+          <Parameter name="position" type="Vector3d" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="ConvertPlanetPositionToLatLongAsl" enabled="false" returnType="Vector3d" accessPath="context.Craft.ConvertPlanetPositionToLatLongAsl" category="Other" description="Vector3d ConvertPlanetPositionToLatLongAsl(Vector3d position)">
+        <Parameters>
+          <Parameter name="position" type="Vector3d" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="CreateMfdWidget" enabled="false" returnType="IMfdWidget" accessPath="context.Craft.CreateMfdWidget" category="Create" description="IMfdWidget CreateMfdWidget(MfdWidgetType widgetType, string name, string icon)">
+        <Parameters>
+          <Parameter name="widgetType" type="MfdWidgetType" isOptional="false" />
+          <Parameter name="name" type="string" isOptional="false" />
+          <Parameter name="icon" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="DisplayMessage" enabled="false" returnType="void" accessPath="context.Craft.DisplayMessage" category="Other" description="void DisplayMessage(string message, float duration)">
+        <Parameters>
+          <Parameter name="message" type="string" isOptional="false" />
+          <Parameter name="duration" type="float" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetActivationGroupState" enabled="false" returnType="bool" accessPath="context.Craft.GetActivationGroupState" category="Read" description="bool GetActivationGroupState(int activationGroup)">
+        <Parameters>
+          <Parameter name="activationGroup" type="int" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetCraftNode" enabled="false" returnType="ICraftNode" accessPath="context.Craft.GetCraftNode" category="Read" description="ICraftNode GetCraftNode(int craftNodeId)">
+        <Parameters>
+          <Parameter name="craftNodeId" type="int" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetCraftNodeByName" enabled="false" returnType="ICraftNode" accessPath="context.Craft.GetCraftNodeByName" category="Read" description="ICraftNode GetCraftNodeByName(string craftName)">
+        <Parameters>
+          <Parameter name="craftName" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetInputExpression" enabled="false" returnType="Delegate" accessPath="context.Craft.GetInputExpression" category="Read" description="Delegate GetInputExpression(string text)">
+        <Parameters>
+          <Parameter name="text" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetMfdChildWidgets" enabled="false" returnType="IEnumerable&lt;IMfdWidget&gt;" accessPath="context.Craft.GetMfdChildWidgets" category="Read" description="IEnumerable&lt;IMfdWidget&gt; GetMfdChildWidgets(string parentName)">
+        <Parameters>
+          <Parameter name="parentName" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetMfdWidget" enabled="false" returnType="IMfdWidget" accessPath="context.Craft.GetMfdWidget" category="Read" description="IMfdWidget GetMfdWidget(string widgetName)">
+        <Parameters>
+          <Parameter name="widgetName" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetPlanet" enabled="false" returnType="IPlanetNode" accessPath="context.Craft.GetPlanet" category="Read" description="IPlanetNode GetPlanet(string planetName)">
+        <Parameters>
+          <Parameter name="planetName" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetTerrainColor" enabled="false" returnType="Vector3d" accessPath="context.Craft.GetTerrainColor" category="Read" description="Vector3d GetTerrainColor(Vector3d latLong)">
+        <Parameters>
+          <Parameter name="latLong" type="Vector3d" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetTerrainHeight" enabled="false" returnType="double" accessPath="context.Craft.GetTerrainHeight" category="Read" description="double GetTerrainHeight(Vector3d latLong)">
+        <Parameters>
+          <Parameter name="latLong" type="Vector3d" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="PlayBeepSound" enabled="false" returnType="void" accessPath="context.Craft.PlayBeepSound" category="Other" description="void PlayBeepSound(float pitch, float volume, float duration)">
+        <Parameters>
+          <Parameter name="pitch" type="float" isOptional="false" />
+          <Parameter name="volume" type="float" isOptional="false" />
+          <Parameter name="duration" type="float" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="ReleaseInputExpression" enabled="false" returnType="void" accessPath="context.Craft.ReleaseInputExpression" category="Other" description="void ReleaseInputExpression(Delegate func)">
+        <Parameters>
+          <Parameter name="func" type="Delegate" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="RequestUserInput" enabled="false" returnType="UserInputRequest" accessPath="context.Craft.RequestUserInput" category="Other" description="UserInputRequest RequestUserInput(string message, string content)">
+        <Parameters>
+          <Parameter name="message" type="string" isOptional="false" />
+          <Parameter name="content" type="string" isOptional="true" defaultValue="null" />
+        </Parameters>
+      </Method>
+      <Method name="SetActivationGroupState" enabled="false" returnType="void" accessPath="context.Craft.SetActivationGroupState" category="Write" description="void SetActivationGroupState(int activationGroup, bool state)">
+        <Parameters>
+          <Parameter name="activationGroup" type="int" isOptional="false" />
+          <Parameter name="state" type="bool" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="SetCameraProperty" enabled="false" returnType="void" accessPath="context.Craft.SetCameraProperty" category="Write" description="void SetCameraProperty(CameraProperty cameraProperty, ExpressionResult value)">
+        <Parameters>
+          <Parameter name="cameraProperty" type="CameraProperty" isOptional="false" />
+          <Parameter name="value" type="ExpressionResult" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="SetPartFuelTransfer" enabled="false" returnType="void" accessPath="context.Craft.SetPartFuelTransfer" category="Write" description="void SetPartFuelTransfer(IPartScript part, FuelTransferMode fuelTransfer)">
+        <Parameters>
+          <Parameter name="part" type="IPartScript" isOptional="false" />
+          <Parameter name="fuelTransfer" type="FuelTransferMode" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="SetPidGainsPitch" enabled="false" returnType="void" accessPath="context.Craft.SetPidGainsPitch" category="Write" description="void SetPidGainsPitch(Vector3 pid)">
+        <Parameters>
+          <Parameter name="pid" type="Vector3" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="SetPidGainsRoll" enabled="false" returnType="void" accessPath="context.Craft.SetPidGainsRoll" category="Write" description="void SetPidGainsRoll(Vector3 pid)">
+        <Parameters>
+          <Parameter name="pid" type="Vector3" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="SetTargetNode" enabled="false" returnType="void" accessPath="context.Craft.SetTargetNode" category="Write" description="void SetTargetNode(string name)">
+        <Parameters>
+          <Parameter name="name" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="SetTargetVector" enabled="false" returnType="void" accessPath="context.Craft.SetTargetVector" category="Write" description="void SetTargetVector(Vector3d position)">
+        <Parameters>
+          <Parameter name="position" type="Vector3d" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="StopSound" enabled="false" returnType="void" accessPath="context.Craft.StopSound" category="Control" description="void StopSound()" />
+      <Method name="SwitchToCraftNode" enabled="false" returnType="void" accessPath="context.Craft.SwitchToCraftNode" category="Other" description="void SwitchToCraftNode(ICraftNode craftNode)">
+        <Parameters>
+          <Parameter name="craftNode" type="ICraftNode" isOptional="false" />
+        </Parameters>
+      </Method>
+      <SubClass name="ICraftScript" accessPath="context.Craft.CraftScript">
+        <Method name="AddDebris" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.AddDebris" category="Create" description="void AddDebris(ICraftDebris debris)">
+          <Parameters>
+            <Parameter name="debris" type="ICraftDebris" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="CalculateBounds" enabled="false" returnType="Bounds" accessPath="context.Craft.CraftScript.CalculateBounds" category="Other" description="Bounds CalculateBounds()" />
+        <Method name="CalculateBounds" enabled="false" returnType="Bounds" accessPath="context.Craft.CraftScript.CalculateBounds" category="Other" description="Bounds CalculateBounds(bool includeDisconnected)">
+          <Parameters>
+            <Parameter name="includeDisconnected" type="bool" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="CalculateWingArea" enabled="false" returnType="float" accessPath="context.Craft.CraftScript.CalculateWingArea" category="Other" description="float CalculateWingArea()" />
+        <Method name="CalculateWingLoading" enabled="false" returnType="float" accessPath="context.Craft.CraftScript.CalculateWingLoading" category="Other" description="float CalculateWingLoading()" />
+        <Method name="DestroyPart" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.DestroyPart" category="Delete" description="void DestroyPart(PartData part, bool destroyPartGameObject)">
+          <Parameters>
+            <Parameter name="part" type="PartData" isOptional="false" />
+            <Parameter name="destroyPartGameObject" type="bool" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetAltitudeAboveGroundLevel" enabled="false" returnType="double" accessPath="context.Craft.CraftScript.GetAltitudeAboveGroundLevel" category="Read" description="double GetAltitudeAboveGroundLevel(Vector3 framePosition)">
+          <Parameters>
+            <Parameter name="framePosition" type="Vector3" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetAltitudeAboveSeaLevel" enabled="false" returnType="float" accessPath="context.Craft.CraftScript.GetAltitudeAboveSeaLevel" category="Read" description="float GetAltitudeAboveSeaLevel(Vector3 framePosition)">
+          <Parameters>
+            <Parameter name="framePosition" type="Vector3" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetAltitudeAboveSeaLevelWithWave" enabled="false" returnType="float" accessPath="context.Craft.CraftScript.GetAltitudeAboveSeaLevelWithWave" category="Read" description="float GetAltitudeAboveSeaLevelWithWave(Vector3 framePosition)">
+          <Parameters>
+            <Parameter name="framePosition" type="Vector3" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetAltitudeAboveSeaLevelWithWave" enabled="false" returnType="float" accessPath="context.Craft.CraftScript.GetAltitudeAboveSeaLevelWithWave" category="Read" description="float GetAltitudeAboveSeaLevelWithWave(Vector3 framePosition, float waveOffset)">
+          <Parameters>
+            <Parameter name="framePosition" type="Vector3" isOptional="false" />
+            <Parameter name="waveOffset" type="float" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetColliderSubmergedPercent" enabled="false" returnType="float" accessPath="context.Craft.CraftScript.GetColliderSubmergedPercent" category="Read" description="float GetColliderSubmergedPercent(Collider collider)">
+          <Parameters>
+            <Parameter name="collider" type="Collider" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetOrCreateFuelMonitor" enabled="false" returnType="FuelMonitor" accessPath="context.Craft.CraftScript.GetOrCreateFuelMonitor" category="Read" description="FuelMonitor GetOrCreateFuelMonitor()" />
+        <Method name="GetPayloadPart" enabled="false" returnType="IPartScript" accessPath="context.Craft.CraftScript.GetPayloadPart" category="Read" description="IPartScript GetPayloadPart(string payloadId, int contractNumber, string payloadTrackingId)">
+          <Parameters>
+            <Parameter name="payloadId" type="string" isOptional="false" />
+            <Parameter name="contractNumber" type="int" isOptional="false" />
+            <Parameter name="payloadTrackingId" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetVerticalVelocity" enabled="false" returnType="float" accessPath="context.Craft.CraftScript.GetVerticalVelocity" category="Read" description="float GetVerticalVelocity()" />
+        <Method name="InitiateDragRecalculation" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.InitiateDragRecalculation" category="Other" description="void InitiateDragRecalculation()" />
+        <Method name="OnDockBegin" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.OnDockBegin" category="Other" description="void OnDockBegin(IDockingPortScript portA, IDockingPortScript portB)">
+          <Parameters>
+            <Parameter name="portA" type="IDockingPortScript" isOptional="false" />
+            <Parameter name="portB" type="IDockingPortScript" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="OnEngineActivationStatusChanged" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.OnEngineActivationStatusChanged" category="Other" description="void OnEngineActivationStatusChanged(bool activated)">
+          <Parameters>
+            <Parameter name="activated" type="bool" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="QueueInertiaTensorRecalculation" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.QueueInertiaTensorRecalculation" category="Other" description="void QueueInertiaTensorRecalculation(IBodyScript bodyScript)">
+          <Parameters>
+            <Parameter name="bodyScript" type="IBodyScript" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="RaiseCraftSplitEvent" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.RaiseCraftSplitEvent" category="Other" description="void RaiseCraftSplitEvent()" />
+        <Method name="RaiseDesignerCraftStructureChangedEvent" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.RaiseDesignerCraftStructureChangedEvent" category="Other" description="void RaiseDesignerCraftStructureChangedEvent()" />
+        <Method name="SetActiveCommandPod" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.SetActiveCommandPod" category="Write" description="void SetActiveCommandPod(ICommandPod commandPod)">
+          <Parameters>
+            <Parameter name="commandPod" type="ICommandPod" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="SetMassChanged" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.SetMassChanged" category="Write" description="void SetMassChanged()" />
+        <Method name="SetPrimaryCommandPod" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.SetPrimaryCommandPod" category="Write" description="void SetPrimaryCommandPod(ICommandPod commandPod, bool saveUndoStep)">
+          <Parameters>
+            <Parameter name="commandPod" type="ICommandPod" isOptional="false" />
+            <Parameter name="saveUndoStep" type="bool" isOptional="true" defaultValue="True" />
+          </Parameters>
+        </Method>
+        <Method name="SetStructureChanged" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.SetStructureChanged" category="Write" description="void SetStructureChanged()" />
+        <Method name="ValidateCraft" enabled="false" returnType="void" accessPath="context.Craft.CraftScript.ValidateCraft" category="Other" description="void ValidateCraft(ValidationResult result)">
+          <Parameters>
+            <Parameter name="result" type="ValidationResult" isOptional="false" />
+          </Parameters>
+        </Method>
+      </SubClass>
+      <SubClass name="PartData" accessPath="context.Craft.ExecutingPart">
+        <Method name="GenerateXml" enabled="false" returnType="XElement" accessPath="context.Craft.ExecutingPart.GenerateXml" category="Other" description="XElement GenerateXml(Transform craftTransform, bool optimizeXml)">
+          <Parameters>
+            <Parameter name="craftTransform" type="Transform" isOptional="false" />
+            <Parameter name="optimizeXml" type="bool" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetAttachPoint" enabled="false" returnType="AttachPoint" accessPath="context.Craft.ExecutingPart.GetAttachPoint" category="Read" description="AttachPoint GetAttachPoint(string name)">
+          <Parameters>
+            <Parameter name="name" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetAttachPoint" enabled="false" returnType="AttachPoint" accessPath="context.Craft.ExecutingPart.GetAttachPoint" category="Read" description="AttachPoint GetAttachPoint(int attachPointId)">
+          <Parameters>
+            <Parameter name="attachPointId" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetMaterial" enabled="false" returnType="PartMaterial" accessPath="context.Craft.ExecutingPart.GetMaterial" category="Read" description="PartMaterial GetMaterial(PartMeshMaterialLevel level)">
+          <Parameters>
+            <Parameter name="level" type="PartMeshMaterialLevel" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetModifier" enabled="false" returnType="T" accessPath="context.Craft.ExecutingPart.GetModifier" category="Read" description="T GetModifier()" />
+        <Method name="GetModifierById" enabled="false" returnType="PartModifierData" accessPath="context.Craft.ExecutingPart.GetModifierById" category="Read" description="PartModifierData GetModifierById(string id)">
+          <Parameters>
+            <Parameter name="id" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetModifierByTypeId" enabled="false" returnType="PartModifierData" accessPath="context.Craft.ExecutingPart.GetModifierByTypeId" category="Read" description="PartModifierData GetModifierByTypeId(string typeId)">
+          <Parameters>
+            <Parameter name="typeId" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetModifierCount" enabled="false" returnType="int" accessPath="context.Craft.ExecutingPart.GetModifierCount" category="Read" description="int GetModifierCount(Type type, bool inherit)">
+          <Parameters>
+            <Parameter name="type" type="Type" isOptional="false" />
+            <Parameter name="inherit" type="bool" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetModifiers" enabled="false" returnType="void" accessPath="context.Craft.ExecutingPart.GetModifiers" category="Read" description="void GetModifiers(List&lt;T&gt; modifiers)">
+          <Parameters>
+            <Parameter name="modifiers" type="List&lt;T&gt;" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetModifiers" enabled="false" returnType="void" accessPath="context.Craft.ExecutingPart.GetModifiers" category="Read" description="void GetModifiers(Type type, bool inherit, List&lt;PartModifierData&gt; modifiers)">
+          <Parameters>
+            <Parameter name="type" type="Type" isOptional="false" />
+            <Parameter name="inherit" type="bool" isOptional="false" />
+            <Parameter name="modifiers" type="List&lt;PartModifierData&gt;" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetPartConnection" enabled="false" returnType="PartConnection" accessPath="context.Craft.ExecutingPart.GetPartConnection" category="Read" description="PartConnection GetPartConnection(PartData part)">
+          <Parameters>
+            <Parameter name="part" type="PartData" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="HasTransparentMaterial" enabled="false" returnType="bool" accessPath="context.Craft.ExecutingPart.HasTransparentMaterial" category="Read" description="bool HasTransparentMaterial()" />
+        <Method name="LoadXML" enabled="false" returnType="void" accessPath="context.Craft.ExecutingPart.LoadXML" category="Other" description="void LoadXML(XElement xml, int xmlVersion)">
+          <Parameters>
+            <Parameter name="xml" type="XElement" isOptional="false" />
+            <Parameter name="xmlVersion" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="OnDesignerPullout" enabled="false" returnType="void" accessPath="context.Craft.ExecutingPart.OnDesignerPullout" category="Other" description="void OnDesignerPullout(string designerPartName, Assembly assembly, bool skipStartPartScale)">
+          <Parameters>
+            <Parameter name="designerPartName" type="string" isOptional="false" />
+            <Parameter name="assembly" type="Assembly" isOptional="false" />
+            <Parameter name="skipStartPartScale" type="bool" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="OnPartDestroyed" enabled="false" returnType="void" accessPath="context.Craft.ExecutingPart.OnPartDestroyed" category="Other" description="void OnPartDestroyed()" />
+        <Method name="OnPartRecovered" enabled="false" returnType="void" accessPath="context.Craft.ExecutingPart.OnPartRecovered" category="Other" description="void OnPartRecovered()" />
+      </SubClass>
+      <SubClass name="INavSphere" accessPath="context.Craft.NavSphere">
+        <Method name="GetVector" enabled="false" returnType="Nullable`1" accessPath="context.Craft.NavSphere.GetVector" category="Read" description="Nullable`1 GetVector(NavSphereIndicatorType vector)">
+          <Parameters>
+            <Parameter name="vector" type="NavSphereIndicatorType" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetVectorFunc" enabled="false" returnType="Func`2" accessPath="context.Craft.NavSphere.GetVectorFunc" category="Read" description="Func`2 GetVectorFunc()" />
+        <Method name="LockCraftHeading" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.LockCraftHeading" category="Other" description="void LockCraftHeading(Vector3d headingDirection, ICraftNode craft)">
+          <Parameters>
+            <Parameter name="headingDirection" type="Vector3d" isOptional="false" />
+            <Parameter name="craft" type="ICraftNode" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LockCurrentHeading" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.LockCurrentHeading" category="Other" description="void LockCurrentHeading()" />
+        <Method name="LockHeading" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.LockHeading" category="Other" description="void LockHeading(float pitch, float heading, ICraftNode craft)">
+          <Parameters>
+            <Parameter name="pitch" type="float" isOptional="false" />
+            <Parameter name="heading" type="float" isOptional="false" />
+            <Parameter name="craft" type="ICraftNode" isOptional="true" defaultValue="null" />
+          </Parameters>
+        </Method>
+        <Method name="LockHeading" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.LockHeading" category="Other" description="void LockHeading(Vector3d headingDirection)">
+          <Parameters>
+            <Parameter name="headingDirection" type="Vector3d" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="ToggleLock" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.ToggleLock" category="Other" description="void ToggleLock(NavSphereIndicatorType mode)">
+          <Parameters>
+            <Parameter name="mode" type="NavSphereIndicatorType" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="ToggleProgradeLock" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.ToggleProgradeLock" category="Other" description="void ToggleProgradeLock()" />
+        <Method name="ToggleRetrogradeLock" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.ToggleRetrogradeLock" category="Other" description="void ToggleRetrogradeLock()" />
+        <Method name="ToggleTargetLock" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.ToggleTargetLock" category="Other" description="void ToggleTargetLock()" />
+        <Method name="UnlockCraftHeading" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.UnlockCraftHeading" category="Other" description="void UnlockCraftHeading(ICraftNode craft)">
+          <Parameters>
+            <Parameter name="craft" type="ICraftNode" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="UnlockHeading" enabled="false" returnType="void" accessPath="context.Craft.NavSphere.UnlockHeading" category="Other" description="void UnlockHeading()" />
+      </SubClass>
+    </Class>
+    <Class name="ILogService" accessPath="context.Log">
+      <Method name="Log" enabled="false" returnType="void" accessPath="context.Log.Log" category="Other" description="void Log(string message, IThreadContext context, ProgramNode node)">
+        <Parameters>
+          <Parameter name="message" type="string" isOptional="false" />
+          <Parameter name="context" type="IThreadContext" isOptional="true" defaultValue="null" />
+          <Parameter name="node" type="ProgramNode" isOptional="true" defaultValue="null" />
+        </Parameters>
+      </Method>
+      <Method name="LogError" enabled="false" returnType="void" accessPath="context.Log.LogError" category="Other" description="void LogError(string message, IThreadContext context, ProgramNode node)">
+        <Parameters>
+          <Parameter name="message" type="string" isOptional="false" />
+          <Parameter name="context" type="IThreadContext" isOptional="true" defaultValue="null" />
+          <Parameter name="node" type="ProgramNode" isOptional="true" defaultValue="null" />
+        </Parameters>
+      </Method>
+    </Class>
+    <Class name="ProgramInstruction" accessPath="context.NextInstruction">
+      <Method name="Execute" enabled="false" returnType="ProgramInstruction" accessPath="context.NextInstruction.Execute" category="Other" description="ProgramInstruction Execute(IThreadContext context)">
+        <Parameters>
+          <Parameter name="context" type="IThreadContext" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetExpression" enabled="false" returnType="ProgramExpression" accessPath="context.NextInstruction.GetExpression" category="Read" description="ProgramExpression GetExpression(int index)">
+        <Parameters>
+          <Parameter name="index" type="int" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetListItems" enabled="false" returnType="List&lt;ListItemInfo&gt;" accessPath="context.NextInstruction.GetListItems" category="Read" description="List&lt;ListItemInfo&gt; GetListItems(string listId)">
+        <Parameters>
+          <Parameter name="listId" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="GetListValue" enabled="false" returnType="string" accessPath="context.NextInstruction.GetListValue" category="Read" description="string GetListValue(string listId)">
+        <Parameters>
+          <Parameter name="listId" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="InitializeExpressions" enabled="false" returnType="void" accessPath="context.NextInstruction.InitializeExpressions" category="Other" description="void InitializeExpressions(ProgramExpression[] expressions)">
+        <Parameters>
+          <Parameter name="expressions" type="ProgramExpression[]" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="OnDeserialized" enabled="false" returnType="void" accessPath="context.NextInstruction.OnDeserialized" category="Other" description="void OnDeserialized(XElement xml)">
+        <Parameters>
+          <Parameter name="xml" type="XElement" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="OnSerialized" enabled="false" returnType="void" accessPath="context.NextInstruction.OnSerialized" category="Other" description="void OnSerialized(XElement xml)">
+        <Parameters>
+          <Parameter name="xml" type="XElement" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="SetExpression" enabled="false" returnType="void" accessPath="context.NextInstruction.SetExpression" category="Write" description="void SetExpression(int index, ProgramExpression programExpression)">
+        <Parameters>
+          <Parameter name="index" type="int" isOptional="false" />
+          <Parameter name="programExpression" type="ProgramExpression" isOptional="false" />
+        </Parameters>
+      </Method>
+      <Method name="SetListValue" enabled="false" returnType="void" accessPath="context.NextInstruction.SetListValue" category="Write" description="void SetListValue(string listId, string value)">
+        <Parameters>
+          <Parameter name="listId" type="string" isOptional="false" />
+          <Parameter name="value" type="string" isOptional="false" />
+        </Parameters>
+      </Method>
+      <SubClass name="ProgramInstruction" accessPath="context.NextInstruction.FirstChild">
+        <Method name="Execute" enabled="false" returnType="ProgramInstruction" accessPath="context.NextInstruction.FirstChild.Execute" category="Other" description="ProgramInstruction Execute(IThreadContext context)">
+          <Parameters>
+            <Parameter name="context" type="IThreadContext" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetExpression" enabled="false" returnType="ProgramExpression" accessPath="context.NextInstruction.FirstChild.GetExpression" category="Read" description="ProgramExpression GetExpression(int index)">
+          <Parameters>
+            <Parameter name="index" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetListItems" enabled="false" returnType="List&lt;ListItemInfo&gt;" accessPath="context.NextInstruction.FirstChild.GetListItems" category="Read" description="List&lt;ListItemInfo&gt; GetListItems(string listId)">
+          <Parameters>
+            <Parameter name="listId" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetListValue" enabled="false" returnType="string" accessPath="context.NextInstruction.FirstChild.GetListValue" category="Read" description="string GetListValue(string listId)">
+          <Parameters>
+            <Parameter name="listId" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="InitializeExpressions" enabled="false" returnType="void" accessPath="context.NextInstruction.FirstChild.InitializeExpressions" category="Other" description="void InitializeExpressions(ProgramExpression[] expressions)">
+          <Parameters>
+            <Parameter name="expressions" type="ProgramExpression[]" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="OnDeserialized" enabled="false" returnType="void" accessPath="context.NextInstruction.FirstChild.OnDeserialized" category="Other" description="void OnDeserialized(XElement xml)">
+          <Parameters>
+            <Parameter name="xml" type="XElement" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="OnSerialized" enabled="false" returnType="void" accessPath="context.NextInstruction.FirstChild.OnSerialized" category="Other" description="void OnSerialized(XElement xml)">
+          <Parameters>
+            <Parameter name="xml" type="XElement" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="SetExpression" enabled="false" returnType="void" accessPath="context.NextInstruction.FirstChild.SetExpression" category="Write" description="void SetExpression(int index, ProgramExpression programExpression)">
+          <Parameters>
+            <Parameter name="index" type="int" isOptional="false" />
+            <Parameter name="programExpression" type="ProgramExpression" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="SetListValue" enabled="false" returnType="void" accessPath="context.NextInstruction.FirstChild.SetListValue" category="Write" description="void SetListValue(string listId, string value)">
+          <Parameters>
+            <Parameter name="listId" type="string" isOptional="false" />
+            <Parameter name="value" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+      </SubClass>
+      <SubClass name="ProgramInstruction" accessPath="context.NextInstruction.Next">
+        <Method name="Execute" enabled="false" returnType="ProgramInstruction" accessPath="context.NextInstruction.Next.Execute" category="Other" description="ProgramInstruction Execute(IThreadContext context)">
+          <Parameters>
+            <Parameter name="context" type="IThreadContext" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetExpression" enabled="false" returnType="ProgramExpression" accessPath="context.NextInstruction.Next.GetExpression" category="Read" description="ProgramExpression GetExpression(int index)">
+          <Parameters>
+            <Parameter name="index" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetListItems" enabled="false" returnType="List&lt;ListItemInfo&gt;" accessPath="context.NextInstruction.Next.GetListItems" category="Read" description="List&lt;ListItemInfo&gt; GetListItems(string listId)">
+          <Parameters>
+            <Parameter name="listId" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetListValue" enabled="false" returnType="string" accessPath="context.NextInstruction.Next.GetListValue" category="Read" description="string GetListValue(string listId)">
+          <Parameters>
+            <Parameter name="listId" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="InitializeExpressions" enabled="false" returnType="void" accessPath="context.NextInstruction.Next.InitializeExpressions" category="Other" description="void InitializeExpressions(ProgramExpression[] expressions)">
+          <Parameters>
+            <Parameter name="expressions" type="ProgramExpression[]" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="OnDeserialized" enabled="false" returnType="void" accessPath="context.NextInstruction.Next.OnDeserialized" category="Other" description="void OnDeserialized(XElement xml)">
+          <Parameters>
+            <Parameter name="xml" type="XElement" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="OnSerialized" enabled="false" returnType="void" accessPath="context.NextInstruction.Next.OnSerialized" category="Other" description="void OnSerialized(XElement xml)">
+          <Parameters>
+            <Parameter name="xml" type="XElement" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="SetExpression" enabled="false" returnType="void" accessPath="context.NextInstruction.Next.SetExpression" category="Write" description="void SetExpression(int index, ProgramExpression programExpression)">
+          <Parameters>
+            <Parameter name="index" type="int" isOptional="false" />
+            <Parameter name="programExpression" type="ProgramExpression" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="SetListValue" enabled="false" returnType="void" accessPath="context.NextInstruction.Next.SetListValue" category="Write" description="void SetListValue(string listId, string value)">
+          <Parameters>
+            <Parameter name="listId" type="string" isOptional="false" />
+            <Parameter name="value" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+      </SubClass>
+      <SubClass name="String" accessPath="context.NextInstruction.Style">
+        <Method name="Clone" enabled="false" returnType="Object" accessPath="context.NextInstruction.Style.Clone" category="Other" description="Object Clone()" />
+        <Method name="CompareTo" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.CompareTo" category="Other" description="int CompareTo(Object value)">
+          <Parameters>
+            <Parameter name="value" type="Object" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="CompareTo" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.CompareTo" category="Other" description="int CompareTo(string strB)">
+          <Parameters>
+            <Parameter name="strB" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Contains" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.Contains" category="Other" description="bool Contains(string value)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Contains" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.Contains" category="Other" description="bool Contains(string value, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Contains" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.Contains" category="Other" description="bool Contains(Char value)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Contains" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.Contains" category="Other" description="bool Contains(Char value, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="CopyTo" enabled="false" returnType="void" accessPath="context.NextInstruction.Style.CopyTo" category="Other" description="void CopyTo(int sourceIndex, Char[] destination, int destinationIndex, int count)">
+          <Parameters>
+            <Parameter name="sourceIndex" type="int" isOptional="false" />
+            <Parameter name="destination" type="Char[]" isOptional="false" />
+            <Parameter name="destinationIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="EndsWith" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.EndsWith" category="Other" description="bool EndsWith(string value)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="EndsWith" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.EndsWith" category="Other" description="bool EndsWith(string value, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="EndsWith" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.EndsWith" category="Other" description="bool EndsWith(string value, bool ignoreCase, CultureInfo culture)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="ignoreCase" type="bool" isOptional="false" />
+            <Parameter name="culture" type="CultureInfo" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="EndsWith" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.EndsWith" category="Other" description="bool EndsWith(Char value)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="GetEnumerator" enabled="false" returnType="CharEnumerator" accessPath="context.NextInstruction.Style.GetEnumerator" category="Read" description="CharEnumerator GetEnumerator()" />
+        <Method name="GetTypeCode" enabled="false" returnType="TypeCode" accessPath="context.NextInstruction.Style.GetTypeCode" category="Read" description="TypeCode GetTypeCode()" />
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(Char value)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(Char value, int startIndex)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(Char value, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(Char value, int startIndex, int count)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(string value)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(string value, int startIndex)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(string value, int startIndex, int count)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(string value, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(string value, int startIndex, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOf" category="Other" description="int IndexOf(string value, int startIndex, int count, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOfAny" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOfAny" category="Other" description="int IndexOfAny(Char[] anyOf)">
+          <Parameters>
+            <Parameter name="anyOf" type="Char[]" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOfAny" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOfAny" category="Other" description="int IndexOfAny(Char[] anyOf, int startIndex)">
+          <Parameters>
+            <Parameter name="anyOf" type="Char[]" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IndexOfAny" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.IndexOfAny" category="Other" description="int IndexOfAny(Char[] anyOf, int startIndex, int count)">
+          <Parameters>
+            <Parameter name="anyOf" type="Char[]" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Insert" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Insert" category="Other" description="string Insert(int startIndex, string value)">
+          <Parameters>
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="value" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="IsNormalized" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.IsNormalized" category="Read" description="bool IsNormalized()" />
+        <Method name="IsNormalized" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.IsNormalized" category="Read" description="bool IsNormalized(NormalizationForm normalizationForm)">
+          <Parameters>
+            <Parameter name="normalizationForm" type="NormalizationForm" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOf" category="Other" description="int LastIndexOf(Char value)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOf" category="Other" description="int LastIndexOf(Char value, int startIndex)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOf" category="Other" description="int LastIndexOf(Char value, int startIndex, int count)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOf" category="Other" description="int LastIndexOf(string value)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOf" category="Other" description="int LastIndexOf(string value, int startIndex)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOf" category="Other" description="int LastIndexOf(string value, int startIndex, int count)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOf" category="Other" description="int LastIndexOf(string value, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOf" category="Other" description="int LastIndexOf(string value, int startIndex, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOf" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOf" category="Other" description="int LastIndexOf(string value, int startIndex, int count, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOfAny" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOfAny" category="Other" description="int LastIndexOfAny(Char[] anyOf)">
+          <Parameters>
+            <Parameter name="anyOf" type="Char[]" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOfAny" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOfAny" category="Other" description="int LastIndexOfAny(Char[] anyOf, int startIndex)">
+          <Parameters>
+            <Parameter name="anyOf" type="Char[]" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="LastIndexOfAny" enabled="false" returnType="int" accessPath="context.NextInstruction.Style.LastIndexOfAny" category="Other" description="int LastIndexOfAny(Char[] anyOf, int startIndex, int count)">
+          <Parameters>
+            <Parameter name="anyOf" type="Char[]" isOptional="false" />
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Normalize" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Normalize" category="Other" description="string Normalize()" />
+        <Method name="Normalize" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Normalize" category="Other" description="string Normalize(NormalizationForm normalizationForm)">
+          <Parameters>
+            <Parameter name="normalizationForm" type="NormalizationForm" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="PadLeft" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.PadLeft" category="Other" description="string PadLeft(int totalWidth)">
+          <Parameters>
+            <Parameter name="totalWidth" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="PadLeft" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.PadLeft" category="Other" description="string PadLeft(int totalWidth, Char paddingChar)">
+          <Parameters>
+            <Parameter name="totalWidth" type="int" isOptional="false" />
+            <Parameter name="paddingChar" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="PadRight" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.PadRight" category="Other" description="string PadRight(int totalWidth)">
+          <Parameters>
+            <Parameter name="totalWidth" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="PadRight" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.PadRight" category="Other" description="string PadRight(int totalWidth, Char paddingChar)">
+          <Parameters>
+            <Parameter name="totalWidth" type="int" isOptional="false" />
+            <Parameter name="paddingChar" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Remove" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Remove" category="Delete" description="string Remove(int startIndex, int count)">
+          <Parameters>
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Remove" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Remove" category="Delete" description="string Remove(int startIndex)">
+          <Parameters>
+            <Parameter name="startIndex" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Replace" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Replace" category="Other" description="string Replace(string oldValue, string newValue, bool ignoreCase, CultureInfo culture)">
+          <Parameters>
+            <Parameter name="oldValue" type="string" isOptional="false" />
+            <Parameter name="newValue" type="string" isOptional="false" />
+            <Parameter name="ignoreCase" type="bool" isOptional="false" />
+            <Parameter name="culture" type="CultureInfo" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Replace" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Replace" category="Other" description="string Replace(string oldValue, string newValue, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="oldValue" type="string" isOptional="false" />
+            <Parameter name="newValue" type="string" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Replace" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Replace" category="Other" description="string Replace(Char oldChar, Char newChar)">
+          <Parameters>
+            <Parameter name="oldChar" type="Char" isOptional="false" />
+            <Parameter name="newChar" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Replace" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Replace" category="Other" description="string Replace(string oldValue, string newValue)">
+          <Parameters>
+            <Parameter name="oldValue" type="string" isOptional="false" />
+            <Parameter name="newValue" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(Char separator, StringSplitOptions options)">
+          <Parameters>
+            <Parameter name="separator" type="Char" isOptional="false" />
+            <Parameter name="options" type="StringSplitOptions" isOptional="true" defaultValue="None" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(Char separator, int count, StringSplitOptions options)">
+          <Parameters>
+            <Parameter name="separator" type="Char" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+            <Parameter name="options" type="StringSplitOptions" isOptional="true" defaultValue="None" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(Char[] separator)">
+          <Parameters>
+            <Parameter name="separator" type="Char[]" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(Char[] separator, int count)">
+          <Parameters>
+            <Parameter name="separator" type="Char[]" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(Char[] separator, StringSplitOptions options)">
+          <Parameters>
+            <Parameter name="separator" type="Char[]" isOptional="false" />
+            <Parameter name="options" type="StringSplitOptions" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(Char[] separator, int count, StringSplitOptions options)">
+          <Parameters>
+            <Parameter name="separator" type="Char[]" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+            <Parameter name="options" type="StringSplitOptions" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(string separator, StringSplitOptions options)">
+          <Parameters>
+            <Parameter name="separator" type="string" isOptional="false" />
+            <Parameter name="options" type="StringSplitOptions" isOptional="true" defaultValue="None" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(string separator, int count, StringSplitOptions options)">
+          <Parameters>
+            <Parameter name="separator" type="string" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+            <Parameter name="options" type="StringSplitOptions" isOptional="true" defaultValue="None" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(String[] separator, StringSplitOptions options)">
+          <Parameters>
+            <Parameter name="separator" type="String[]" isOptional="false" />
+            <Parameter name="options" type="StringSplitOptions" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Split" enabled="false" returnType="String[]" accessPath="context.NextInstruction.Style.Split" category="Other" description="String[] Split(String[] separator, int count, StringSplitOptions options)">
+          <Parameters>
+            <Parameter name="separator" type="String[]" isOptional="false" />
+            <Parameter name="count" type="int" isOptional="false" />
+            <Parameter name="options" type="StringSplitOptions" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="StartsWith" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.StartsWith" category="Control" description="bool StartsWith(string value)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="StartsWith" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.StartsWith" category="Control" description="bool StartsWith(string value, StringComparison comparisonType)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="comparisonType" type="StringComparison" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="StartsWith" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.StartsWith" category="Control" description="bool StartsWith(string value, bool ignoreCase, CultureInfo culture)">
+          <Parameters>
+            <Parameter name="value" type="string" isOptional="false" />
+            <Parameter name="ignoreCase" type="bool" isOptional="false" />
+            <Parameter name="culture" type="CultureInfo" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="StartsWith" enabled="false" returnType="bool" accessPath="context.NextInstruction.Style.StartsWith" category="Control" description="bool StartsWith(Char value)">
+          <Parameters>
+            <Parameter name="value" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Substring" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Substring" category="Other" description="string Substring(int startIndex)">
+          <Parameters>
+            <Parameter name="startIndex" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Substring" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Substring" category="Other" description="string Substring(int startIndex, int length)">
+          <Parameters>
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="length" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="ToCharArray" enabled="false" returnType="Char[]" accessPath="context.NextInstruction.Style.ToCharArray" category="Other" description="Char[] ToCharArray()" />
+        <Method name="ToCharArray" enabled="false" returnType="Char[]" accessPath="context.NextInstruction.Style.ToCharArray" category="Other" description="Char[] ToCharArray(int startIndex, int length)">
+          <Parameters>
+            <Parameter name="startIndex" type="int" isOptional="false" />
+            <Parameter name="length" type="int" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="ToLower" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.ToLower" category="Other" description="string ToLower()" />
+        <Method name="ToLower" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.ToLower" category="Other" description="string ToLower(CultureInfo culture)">
+          <Parameters>
+            <Parameter name="culture" type="CultureInfo" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="ToLowerInvariant" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.ToLowerInvariant" category="Other" description="string ToLowerInvariant()" />
+        <Method name="ToUpper" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.ToUpper" category="Other" description="string ToUpper()" />
+        <Method name="ToUpper" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.ToUpper" category="Other" description="string ToUpper(CultureInfo culture)">
+          <Parameters>
+            <Parameter name="culture" type="CultureInfo" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="ToUpperInvariant" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.ToUpperInvariant" category="Other" description="string ToUpperInvariant()" />
+        <Method name="Trim" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Trim" category="Other" description="string Trim()" />
+        <Method name="Trim" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Trim" category="Other" description="string Trim(Char trimChar)">
+          <Parameters>
+            <Parameter name="trimChar" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="Trim" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.Trim" category="Other" description="string Trim(Char[] trimChars)">
+          <Parameters>
+            <Parameter name="trimChars" type="Char[]" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="TrimEnd" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.TrimEnd" category="Other" description="string TrimEnd()" />
+        <Method name="TrimEnd" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.TrimEnd" category="Other" description="string TrimEnd(Char trimChar)">
+          <Parameters>
+            <Parameter name="trimChar" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="TrimEnd" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.TrimEnd" category="Other" description="string TrimEnd(Char[] trimChars)">
+          <Parameters>
+            <Parameter name="trimChars" type="Char[]" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="TrimStart" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.TrimStart" category="Other" description="string TrimStart()" />
+        <Method name="TrimStart" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.TrimStart" category="Other" description="string TrimStart(Char trimChar)">
+          <Parameters>
+            <Parameter name="trimChar" type="Char" isOptional="false" />
+          </Parameters>
+        </Method>
+        <Method name="TrimStart" enabled="false" returnType="string" accessPath="context.NextInstruction.Style.TrimStart" category="Other" description="string TrimStart(Char[] trimChars)">
+          <Parameters>
+            <Parameter name="trimChars" type="Char[]" isOptional="false" />
+          </Parameters>
+        </Method>
+      </SubClass>
+    </Class>
+    <Class name="KnownChainedMethods" description="Common chained method calls">
+      <Method name="context.GetOrCreateGlobalVariable().Value.Set" enabled="false" category="Chained" description="Chained method call: context.GetOrCreateGlobalVariable().Value.Set" fullPath="context.GetOrCreateGlobalVariable().Value.Set" />
+      <Method name="context.GetOrCreateGlobalVariable().Value.Get" enabled="false" category="Chained" description="Chained method call: context.GetOrCreateGlobalVariable().Value.Get" fullPath="context.GetOrCreateGlobalVariable().Value.Get" />
+      <Method name="context.Craft.BroadcastMessage" enabled="false" category="Chained" description="Chained method call: context.Craft.BroadcastMessage" fullPath="context.Craft.BroadcastMessage" />
+      <Method name="context.Craft.ExecutingPart.Activated" enabled="false" category="Chained" description="Chained method call: context.Craft.ExecutingPart.Activated" fullPath="context.Craft.ExecutingPart.Activated" />
+      <Method name="context.Craft.ExecutingPart.IsDestroyed" enabled="false" category="Chained" description="Chained method call: context.Craft.ExecutingPart.IsDestroyed" fullPath="context.Craft.ExecutingPart.IsDestroyed" />
+      <Method name="context.Log.LogError" enabled="false" category="Chained" description="Chained method call: context.Log.LogError" fullPath="context.Log.LogError" />
+      <Method name="context.Log.LogWarning" enabled="false" category="Chained" description="Chained method call: context.Log.LogWarning" fullPath="context.Log.LogWarning" />
+      <Method name="context.Log.LogInfo" enabled="false" category="Chained" description="Chained method call: context.Log.LogInfo" fullPath="context.Log.LogInfo" />
+    </Class>
+  </Namespace>
+</MethodWhitelist>
