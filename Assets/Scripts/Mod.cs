@@ -81,9 +81,7 @@ namespace Assets.Scripts
         {
             ["StartSockets"] = (typeof(StartSocketsInstruction), () => new StartSocketsInstruction()),
             ["SentSockets"] = (typeof(SentSocketsInstruction), () => new SentSocketsInstruction()),
-            ["StopSockets"] = (typeof(StopSocketsInstruction), () => new StopSocketsInstruction()),
-            ["UpdateVzVarBuffer"] = (typeof(UpdateVzVarBufferInstruction), () => new UpdateVzVarBufferInstruction()),
-            ["PreciseWait"] = (typeof(PreciseWaitInstruction), () => new PreciseWaitInstruction())
+            ["StopSockets"] = (typeof(StopSocketsInstruction), () => new StopSocketsInstruction())
         };
 
         // 核心注册方法
@@ -172,8 +170,8 @@ namespace Assets.Scripts
                     stylesElement.Add(new XElement(ns + "Style",
                         new XAttribute("id", "StartSockets"),
                         new XAttribute("color", "Test1Color"),
-                        new XAttribute("format", "start sockets server on port (0) buffer length (1) useVzVarBuffer (2)"),
-                        new XAttribute("tooltip", "127.0.0.1,You can start the service again to refresh the buffer length and useVzVarBuffer without interrupting the connection")));
+                        new XAttribute("format", "start sockets server on port (0) buffer length (1)"),
+                        new XAttribute("tooltip", "127.0.0.1,You can start the service again to refresh the buffer length without interrupting the connection")));
 
                     stylesElement.Add(new XElement(ns + "Style",
                         new XAttribute("id", "SentSockets"),
@@ -186,19 +184,6 @@ namespace Assets.Scripts
                         new XAttribute("color", "Test1Color"),
                         new XAttribute("format", "stop sockets server on port (0)"),
                         new XAttribute("tooltip", "...")));
-
-                    stylesElement.Add(new XElement(ns + "Style",
-                        new XAttribute("id", "UpdateVzVarBuffer"),
-                        new XAttribute("color", "Test1Color"),
-                        new XAttribute("format", "update Vz Variable buffer on port (0)"),
-                        new XAttribute("tooltip", "Update buffer between socket and Vz, only works when UseVzVariableBuffer is true")));
-
-                    stylesElement.Add(new XElement(ns + "Style",
-                        new XAttribute("id", "PreciseWait"),
-                        new XAttribute("color", "Test1Color"),
-                        new XAttribute("format", "precise wait (0) seconds"),
-                        new XAttribute("tooltip", "Wait for precise time in seconds")));
-
                 }
 
                 XElement categoriesElement = xml.Element(ns + "Categories");
@@ -210,7 +195,7 @@ namespace Assets.Scripts
                     {
                         socketCategory = new XElement(ns + "Category",
                             new XAttribute("name", "Socket"),
-                            new XAttribute("icon", "Sockets service for Vizzy"));
+                            new XAttribute("icon", "Sockets service for Vizzy/Sprite/Socket"));
                         categoriesElement.Add(socketCategory);
                     }
 
@@ -220,9 +205,6 @@ namespace Assets.Scripts
                         new XAttribute("text", "10809")));
                     startSockets.Add(new XElement(ns + "Constant",
                         new XAttribute("text", "2048")));
-                    startSockets.Add(new XElement(ns + "Constant",
-                        new XAttribute("style", "true"),
-                        new XAttribute("bool", "true")));
                     socketCategory.Add(startSockets);
 
                     XElement sentSockets = new XElement(ns + "SentSockets",
@@ -238,18 +220,6 @@ namespace Assets.Scripts
                     stopSockets.Add(new XElement(ns + "Constant",
                         new XAttribute("text", "10809")));
                     socketCategory.Add(stopSockets);
-
-                    XElement updateVzVarBuffer = new XElement(ns + "UpdateVzVarBuffer",
-                        new XAttribute("style", "UpdateVzVarBuffer"));
-                    updateVzVarBuffer.Add(new XElement(ns + "Constant",
-                        new XAttribute("text", "10809")));
-                    socketCategory.Add(updateVzVarBuffer);
-
-                    XElement preciseWait = new XElement(ns + "PreciseWait",
-                        new XAttribute("style", "PreciseWait"));
-                    preciseWait.Add(new XElement(ns + "Constant",
-                        new XAttribute("text", "1.0")));
-                    socketCategory.Add(preciseWait);
 
                     XElement receivesocketEvent = new XElement(ns + "Event",
                         new XAttribute("style", "receive-msg"),
