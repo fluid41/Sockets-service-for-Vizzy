@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using System.IO;
 
 namespace Assets.Scripts
 {
@@ -154,88 +155,119 @@ namespace Assets.Scripts
             static void Prefix(ref XElement xml, ref bool showMfdCategory)
             {
                 Debug.Log("VizzyToolbox rewrite start");
-                //showMfdCategory = true;
+                ApplySocketsToolboxConfiguration(xml);
+            }
+        }
 
-                XNamespace ns = xml.Name.Namespace;
-                XElement colorsElement = xml.Element(ns + "Colors");
-                if (colorsElement != null)
+        private static void ApplySocketsToolboxConfiguration(XElement toolboxXml)
+        {
+            try
+            {
+                var xmlConfigAsset = Instance.ResourceLoader.LoadAsset<TextAsset>("Assets/Scripts/Vizzy/SocketsServer/SocketsVizzyToolbox.xml");
+                if (xmlConfigAsset == null)
                 {
-                    colorsElement.Add(new XElement(ns + "Color",
-                        new XAttribute("id", "Test1Color"),
-                        new XAttribute("color", "#373737")));
-                }
-                XElement stylesElement = xml.Element(ns + "Styles");
-                if (stylesElement != null)
-                {
-                    stylesElement.Add(new XElement(ns + "Style",
-                        new XAttribute("id", "StartSockets"),
-                        new XAttribute("color", "Test1Color"),
-                        new XAttribute("format", "start sockets server on port (0) buffer length (1)"),
-                        new XAttribute("tooltip", "127.0.0.1,You can start the service again to refresh the buffer length without interrupting the connection")));
-
-                    stylesElement.Add(new XElement(ns + "Style",
-                        new XAttribute("id", "SentSockets"),
-                        new XAttribute("color", "Test1Color"),
-                        new XAttribute("format", "send list (0) on port (1)"),
-                        new XAttribute("tooltip", "Must be list, otherwise a null value will be sent")));
-
-                    stylesElement.Add(new XElement(ns + "Style",
-                        new XAttribute("id", "StopSockets"),
-                        new XAttribute("color", "Test1Color"),
-                        new XAttribute("format", "stop sockets server on port (0)"),
-                        new XAttribute("tooltip", "...")));
+                    Debug.LogWarning("SocketsVizzyToolbox.xml not found in mod resources");
+                    return;
                 }
 
-                XElement categoriesElement = xml.Element(ns + "Categories");
-                if (categoriesElement != null)
+                var configDocument = XDocument.Parse(xmlConfigAsset.text);
+                var configRoot = configDocument.Root;
+                XNamespace xmlNamespace = toolboxXml.Name.Namespace;
+
+                // 应用颜色配置
+                ApplyColorConfigurations(toolboxXml, configRoot, xmlNamespace);
+                
+                // 应用样式配置
+                ApplyStyleConfigurations(toolboxXml, configRoot, xmlNamespace);
+                
+                // 应用分类配置
+                ApplyCategoryConfigurations(toolboxXml, configRoot, xmlNamespace);
+
+                Debug.Log("SocketsVizzyToolbox configuration applied successfully");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to apply SocketsVizzyToolbox configuration: {ex.Message}");
+            }
+        }
+
+        private static void ApplyColorConfigurations(XElement toolboxXml, XElement configRoot, XNamespace xmlNamespace)
+        {
+            var colorsElement = toolboxXml.Element(xmlNamespace + "Colors");
+            var colorsConfig = configRoot.Element("Colors");
+            
+            if (colorsElement != null && colorsConfig != null)
+            {
+                foreach (var colorDefinition in colorsConfig.Elements("Color"))
                 {
-                    XElement socketCategory = categoriesElement.Elements(ns + "Category")
-                        .FirstOrDefault(x => (string)x.Attribute("name") == "SocketCategory");
-                    if (socketCategory == null)
+                    colorsElement.Add(new XElement(xmlNamespace + "Color",
+                        new XAttribute("id", colorDefinition.Attribute("id")?.Value ?? ""),
+                        new XAttribute("color", colorDefinition.Attribute("color")?.Value ?? "")));
+                }
+            }
+        }
+
+        private static void ApplyStyleConfigurations(XElement toolboxXml, XElement configRoot, XNamespace xmlNamespace)
+        {
+            var stylesElement = toolboxXml.Element(xmlNamespace + "Styles");
+            var stylesConfig = configRoot.Element("Styles");
+            
+            if (stylesElement != null && stylesConfig != null)
+            {
+                foreach (var styleDefinition in stylesConfig.Elements("Style"))
+                {
+                    stylesElement.Add(new XElement(xmlNamespace + "Style",
+                        new XAttribute("id", styleDefinition.Attribute("id")?.Value ?? ""),
+                        new XAttribute("color", styleDefinition.Attribute("color")?.Value ?? ""),
+                        new XAttribute("format", styleDefinition.Attribute("format")?.Value ?? ""),
+                        new XAttribute("tooltip", styleDefinition.Attribute("tooltip")?.Value ?? "")));
+                }
+            }
+        }
+
+        private static void ApplyCategoryConfigurations(XElement toolboxXml, XElement configRoot, XNamespace xmlNamespace)
+        {
+            var categoriesElement = toolboxXml.Element(xmlNamespace + "Categories");
+            var categoryConfig = configRoot.Element("Category");
+            
+            if (categoriesElement != null && categoryConfig != null)
+            {
+                var categoryName = categoryConfig.Attribute("name")?.Value ?? "Socket";
+                
+                var socketCategory = categoriesElement.Elements(xmlNamespace + "Category")
+                    .FirstOrDefault(category => (string)category.Attribute("name") == categoryName);
+                    
+                if (socketCategory == null)
+                {
+                    socketCategory = new XElement(xmlNamespace + "Category",
+                        new XAttribute("name", categoryName),
+                        new XAttribute("icon", categoryConfig.Attribute("icon")?.Value ?? ""));
+                    categoriesElement.Add(socketCategory);
+                }
+
+                // 添加配置中定义的所有元素
+                foreach (var elementDefinition in categoryConfig.Elements())
+                {
+                    var newElement = new XElement(xmlNamespace + elementDefinition.Name.LocalName);
+                    
+                    // 复制所有属性
+                    foreach (var attribute in elementDefinition.Attributes())
                     {
-                        socketCategory = new XElement(ns + "Category",
-                            new XAttribute("name", "Socket"),
-                            new XAttribute("icon", "Sockets service for Vizzy/Sprite/Socket"));
-                        categoriesElement.Add(socketCategory);
+                        newElement.SetAttributeValue(attribute.Name.LocalName, attribute.Value);
                     }
 
-                    XElement startSockets = new XElement(ns + "StartSockets",
-                        new XAttribute("style", "StartSockets"));
-                    startSockets.Add(new XElement(ns + "Constant",
-                        new XAttribute("text", "10809")));
-                    startSockets.Add(new XElement(ns + "Constant",
-                        new XAttribute("text", "2048")));
-                    socketCategory.Add(startSockets);
+                    // 添加子元素（如Constant）
+                    foreach (var childElement in elementDefinition.Elements())
+                    {
+                        var newChildElement = new XElement(xmlNamespace + childElement.Name.LocalName);
+                        foreach (var childAttribute in childElement.Attributes())
+                        {
+                            newChildElement.SetAttributeValue(childAttribute.Name.LocalName, childAttribute.Value);
+                        }
+                        newElement.Add(newChildElement);
+                    }
 
-                    XElement sentSockets = new XElement(ns + "SentSockets",
-                        new XAttribute("style", "SentSockets"));
-                    sentSockets.Add(new XElement(ns + "Constant",
-                        new XAttribute("text", "data")));
-                    sentSockets.Add(new XElement(ns + "Constant",
-                        new XAttribute("text", "10809")));
-                    socketCategory.Add(sentSockets);
-
-                    XElement stopSockets = new XElement(ns + "StopSockets",
-                        new XAttribute("style", "StopSockets"));
-                    stopSockets.Add(new XElement(ns + "Constant",
-                        new XAttribute("text", "10809")));
-                    socketCategory.Add(stopSockets);
-
-                    XElement receivesocketEvent = new XElement(ns + "Event",
-                        new XAttribute("style", "receive-msg"),
-                        new XAttribute("event", "ReceiveMessage"));
-                    receivesocketEvent.Add(new XElement(ns + "Constant",
-                        new XAttribute("text", "10809"),
-                        new XAttribute("canReplace", "false")));
-                    socketCategory.Add(receivesocketEvent);
-                    
-                    XElement socketErrorEvent = new XElement(ns + "Event",
-                        new XAttribute("style", "receive-msg"),
-                        new XAttribute("event", "ReceiveMessage"));
-                    socketErrorEvent.Add(new XElement(ns + "Constant",
-                        new XAttribute("text", "socket error"),
-                        new XAttribute("canReplace", "false")));
-                    socketCategory.Add(socketErrorEvent);
+                    socketCategory.Add(newElement);
                 }
             }
         }

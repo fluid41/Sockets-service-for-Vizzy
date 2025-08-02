@@ -27,7 +27,8 @@ MonoBehaviour:
     Harmony'
   _loadPriority: 1000
   _name: Sockets service for Vizzy
-  _otherAssets: []
+  _otherAssets:
+  - {fileID: 4900000, guid: 6613ebd9a6e494e4994f37ef583b7321, type: 3}
   _prefabs: []
   _steamDescription: 
   _steamLanguage: English

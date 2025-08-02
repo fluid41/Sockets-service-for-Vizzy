@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VizzyConfig>
+  <Colors>
+    <Color id="Test1Color" color="#97a956ff" />
+  </Colors>
+  
+  <Styles>
+    <Style id="StartSockets" color="Test1Color" format="start sockets server on port (0) buffer length (1)" tooltip="127.0.0.1,You can start the service again to refresh the buffer length without interrupting the connection" />
+    <Style id="SentSockets" color="Test1Color" format="send list (0) on port (1)" tooltip="Must be list, otherwise a null value will be sent" />
+    <Style id="StopSockets" color="Test1Color" format="stop sockets server on port (0)" tooltip="..." />
+  </Styles>
+  
+  <Category name="Socket" icon="Sockets service for Vizzy/Sprite/Socket">
+    <StartSockets style="StartSockets">
+      <Constant text="10809" />
+      <Constant text="2048" />
+    </StartSockets>
+    
+    <SentSockets style="SentSockets">
+      <Constant text="data" />
+      <Constant text="10809" />
+    </SentSockets>
+    
+    <StopSockets style="StopSockets">
+      <Constant text="10809" />
+    </StopSockets>
+    
+    <Event style="receive-msg" event="ReceiveMessage">
+      <Constant text="10809" canReplace="false" />
+    </Event>
+    
+    <Event style="receive-msg" event="ReceiveMessage" name="socketErrorEvent">
+      <Constant text="socket error" canReplace="false" />
+    </Event>
+  </Category>
+</VizzyConfig>

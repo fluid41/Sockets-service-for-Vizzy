@@ -27,7 +27,7 @@ namespace Assets.Scripts.Vizzy.SocketsService
                 Debug.Log($"Server already exists on port {port}, updating its context");
                 var existingServer = _servers[port];
                 existingServer.UpdateBuffer(buffer);
-                existingServer.UpdateCraft(context);
+                existingServer.UpdateContext(context);
                 return true;
             }
 
@@ -85,11 +85,11 @@ namespace Assets.Scripts.Vizzy.SocketsService
         public static void Receive(IThreadContext context, int port, byte[] data)
         {    
             //context.Craft.BroadcastMessage(BroadcastScope.Program, context.Craft.Name, data);
-            //Debug.Log($"Message received from port {port}");
-            //Debug.Log($"Message content: {System.Text.Encoding.UTF8.GetString(data)}");
+            // Debug.Log($"Message received from port {port}");
+            // Debug.Log($"Message content: {Encoding.UTF8.GetString(data)}");
             if (context.Craft.ExecutingPart.Activated == true || context.Craft.ExecutingPart.IsDestroyed == false)
             {
-                string[] array = System.Text.Encoding.UTF8.GetString(data).Split(new string[] { "<<" }, StringSplitOptions.None);
+                string[] array = Encoding.UTF8.GetString(data).Split(new string[] { "<<" }, StringSplitOptions.None);
                 var list = new List<ExpressionListItem>();
                 foreach (string text in array)
                 {
@@ -119,7 +119,7 @@ namespace Assets.Scripts.Vizzy.SocketsService
         private readonly List<TcpClient> _clients = new List<TcpClient>();
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
-        public void UpdateCraft(IThreadContext newContext)
+        public void UpdateContext(IThreadContext newContext)
         {
             _Context = newContext;
         }
@@ -139,6 +139,7 @@ namespace Assets.Scripts.Vizzy.SocketsService
         public void Start()
         {
             _listener = new TcpListener(IPAddress.Loopback, _port);
+            // _listener = new TcpListener(IPAddress.Any, _port);
             _listener.Start();
             Debug.Log($"SocketServer started on port {_port}");
             Task.Run(() => AcceptClientsAsync());
